@@ -1,7 +1,7 @@
 package database;
 import entries.Entry;
 
-public abstract class Database {
+public abstract class Database<T> {
 
     protected Database() {}
 

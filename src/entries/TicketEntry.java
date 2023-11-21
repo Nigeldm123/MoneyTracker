@@ -1,16 +1,16 @@
 package entries;
 
-public class TicketEntry extends Entry {
+public class TicketEntry<T> extends Entry<T> {
     private PersonEntry person;
     private Double price;
 
-    public TicketEntry(PersonEntry person, Double price) {
-        super("TicketEntry");
+    public TicketEntry(T template, PersonEntry person, Double price) {
+        super(template);
         this.person = person;
         this.price = price;
     }
 
-    public PersonEntry getPerson() {
+    public PersonEntry<T> getPerson() {
         return person;
     }
 

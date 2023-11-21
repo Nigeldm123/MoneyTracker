@@ -6,7 +6,6 @@ public class Entry<T> {
     public T getTemplate() {
         return template;
     }
-
     public void setTemplate(T template) {
         this.template = template;
     }

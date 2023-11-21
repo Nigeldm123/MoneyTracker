@@ -1,9 +1,13 @@
 package entries;
 
-public class PersonEntry extends Entry {
+public class PersonEntry extends Entry<PersonEntry> {
     private String name;
-    public PersonEntry(String name) {
-        super("PersonEntry");
+    public PersonEntry(PersonEntry template, String name) {
+        super(template);
         this.name = name;
+    }
+
+    public String getName(){
+        return name;
     }
 }
