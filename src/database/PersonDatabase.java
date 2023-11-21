@@ -2,6 +2,8 @@ package database;
 
 import entries.PersonEntry;
 
+import java.util.ArrayList;
+
 public class PersonDatabase extends Database {
     private static PersonDatabase database;
     private ArrayList<PersonEntry> group;
@@ -14,15 +16,15 @@ public class PersonDatabase extends Database {
         }
         return database;
     }
-    public void addEntry() {
-
+    public void addEntry(PersonEntry person) {
+        group.add(person);
     }
 
-    public void removeEntry() {
-
+    public void removeEntry(PersonEntry person) {
+        group.remove(person);
     }
 
-    public String getPerson() {
-        return name;
+    public PersonEntry getPerson(PersonEntry person) {
+        return person;
     }
 }

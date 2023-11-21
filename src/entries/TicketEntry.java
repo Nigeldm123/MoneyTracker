@@ -1,4 +1,4 @@
 package entries;
 
-public class TicketEntry {
+public class TicketEntry extends Entry {
 }
