@@ -1,13 +1,8 @@
 package entries;
 
-public class PersonEntry extends Entry<PersonEntry> {
+public class PersonEntry {
     private String name;
-    public PersonEntry(PersonEntry template, String name) {
-        super(template);
+    public PersonEntry(String name) {
         this.name = name;
-    }
-
-    public String getName(){
-        return name;
     }
 }
