@@ -5,4 +5,7 @@ public class PersonEntry {
     public PersonEntry(String name) {
         this.name = name;
     }
+    public String getName(){
+        return name;
+    }
 }

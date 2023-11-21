@@ -30,4 +30,12 @@ public class PersonDatabase extends Database<PersonEntry> {
     public PersonEntry getPerson(PersonEntry person) {
         return person;
     }
+
+    public ArrayList<PersonEntry> getGroup() {
+        return group;
+    }
+
+    /*public void printPersonList(){
+        System.out.println(group);
+    }*/
 }
