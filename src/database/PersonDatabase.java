@@ -7,9 +7,11 @@ import java.util.ArrayList;
 public class PersonDatabase extends Database {
     private static PersonDatabase database;
     private ArrayList<PersonEntry> group;
-    private String name;
+
     private PersonDatabase() {
+        this.group = new ArrayList<>();
     }
+
     public static PersonDatabase getInstance() {
         if (database == null) {
             database = new PersonDatabase();
