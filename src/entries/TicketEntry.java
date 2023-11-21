@@ -1,11 +1,10 @@
 package entries;
 
-public class TicketEntry extends Entry {
+public class TicketEntry {
     private PersonEntry person;
     private Double price;
 
     public TicketEntry(PersonEntry person, Double price) {
-        super("TicketEntry");
         this.person = person;
         this.price = price;
     }

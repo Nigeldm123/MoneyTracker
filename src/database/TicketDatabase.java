@@ -6,7 +6,7 @@ import entries.TicketEntry;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TicketDatabase extends Database {
+public class TicketDatabase extends Database<TicketEntry> {
     private static TicketDatabase database;
     private String event;
     private Map<PersonEntry,Double> tickets;

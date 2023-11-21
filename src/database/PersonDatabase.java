@@ -4,7 +4,7 @@ import entries.PersonEntry;
 
 import java.util.ArrayList;
 
-public class PersonDatabase extends Database {
+public class PersonDatabase extends Database<PersonEntry> {
     private static PersonDatabase database;
     private ArrayList<PersonEntry> group;
 
@@ -18,6 +18,7 @@ public class PersonDatabase extends Database {
         }
         return database;
     }
+
     public void addEntry(PersonEntry person) {
         group.add(person);
     }

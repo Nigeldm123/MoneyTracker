@@ -1,10 +1,9 @@
 package database;
-import entries.Entry;
 
-public abstract class Database {
+public abstract class Database<T> {
+    protected Database() {
+    }
 
-    protected Database() {}
-
-    public abstract void addEntry(Entry entry);
-    public abstract void removeEntry(Entry entry);
+    public abstract void addEntry(T entry);
+    public abstract void removeEntry(T entry);
 }

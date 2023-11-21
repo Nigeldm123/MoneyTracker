@@ -1,9 +1,8 @@
 package entries;
 
-public class PersonEntry extends Entry {
+public class PersonEntry {
     private String name;
     public PersonEntry(String name) {
-        super("PersonEntry");
         this.name = name;
     }
 }
