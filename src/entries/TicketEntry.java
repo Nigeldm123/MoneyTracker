@@ -1,22 +1,18 @@
 package entries;
 
-import java.util.Map;
-
 public class TicketEntry {
-    private final Map<PersonEntry, Double> map;
     private PersonEntry person;
     private Double price;
     public enum events {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS};
     private events myEvent;
-    private events event;
+    private String event;
     private boolean split;      // true = evenly split      false = not evenly split
-    private String payer;
 
-    public TicketEntry(Map<PersonEntry,Double> map, events event, boolean split, String payer) {
-        this.map = map;
+    public TicketEntry(PersonEntry person, Double price, String event, boolean split) {
+        this.person = person;
+        this.price = price;
         this.event = event;
         this.split = split;
-        this.payer = payer;     // check person who payed in list of people in group
     }
 
     public PersonEntry getPerson() {
@@ -24,7 +20,6 @@ public class TicketEntry {
     }
 
     public Double getPrice() {
-        //this.price = map.get(price);
         return price;
     }
 
@@ -32,23 +27,11 @@ public class TicketEntry {
         return split;
     }
 
-    public events getEvent() {
+    public String getEvent() {
         return event;
     }
 
-    public String getPayer() {
-        return payer;
-    }
-
-    public void setPayer(String payer) {
-        this.payer = payer;
-    }
-
-    public Map<PersonEntry, Double> getMap() {
-        return map;
-    }
-
-/*public String getEvent() {
+    /*public String getEvent() {
         String return_val;
         switch (myEvent) {
             case RESTAURANT:
