@@ -76,6 +76,7 @@ public class TicketDatabase extends Database<TicketEntry> {
 
     public void removeEntry(TicketEntry ticket) {
 
+
     }
 
 }
