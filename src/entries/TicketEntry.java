@@ -17,6 +17,7 @@ public class TicketEntry {
         this.event = event;
         this.split = split;
         this.payer = payer;     // check person who payed in list of people in group
+
     }
 
     public PersonEntry getPerson() {
