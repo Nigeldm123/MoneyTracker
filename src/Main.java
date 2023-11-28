@@ -3,6 +3,7 @@ import database.PersonDatabase;
 import database.TicketDatabase;
 import entries.PersonEntry;
 import entries.TicketEntry;
+import factories.TicketFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,9 +32,10 @@ public class Main {
         map.put(person,10.0);
         map.put(person2,30.0);
         map.put(person3,20.0);
-        TicketEntry ticket = new TicketEntry(map,event1,split1,person2);
-        print(ticket);
-        t.addEntry(ticket);
+        TicketFactory factory = new TicketFactory();
+        TicketEntry ticket1 = factory.getTicket(map,event1,split1,person2);
+        print(ticket1);
+        t.addEntry(ticket1);
         /*t.removeEntry(ticket);
         print(ticket,person);*/
     }
