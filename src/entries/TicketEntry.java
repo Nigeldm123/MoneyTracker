@@ -6,13 +6,7 @@ import java.util.Map;
 
 public class TicketEntry {
     private final Map<PersonEntry, Double> ticketMap;
-    private PersonEntry person;
-    private Double price;
-
-    public enum eventsEnum {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS}
-
-    ;
-    private eventsEnum myEvent;
+    public enum eventsEnum {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS};
     private eventsEnum event;
     private boolean split;      // true = evenly split      false = not evenly split
     private PersonEntry payer;
@@ -23,15 +17,6 @@ public class TicketEntry {
         this.split = split;
         this.payer = payer;     // check person who payed in list of people in group
 
-    }
-
-    public PersonEntry getPerson() {
-        return person;
-    }
-
-    public Double getPrice() {
-        //this.price = map.get(price);
-        return price;
     }
 
     public boolean isSplit() {
