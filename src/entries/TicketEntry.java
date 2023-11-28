@@ -48,6 +48,10 @@ public class TicketEntry {
         return map;
     }
 
+    public void clear(){
+        map.clear();
+    }
+
 /*public String getEvent() {
         String return_val;
         switch (myEvent) {

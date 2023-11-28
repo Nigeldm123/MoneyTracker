@@ -35,6 +35,8 @@ public class Main {
         TicketEntry ticket = new TicketEntry(map,event1,split1,payer1);
         print(ticket,person);
         t.addEntry(ticket);
+        /*t.removeEntry(ticket);
+        print(ticket,person);*/
     }
 
     public void print(TicketEntry t, PersonEntry p)
