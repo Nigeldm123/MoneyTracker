@@ -5,5 +5,5 @@ public abstract class Database<T> {
     }
 
     public abstract void addEntry(T entry);
-    public abstract void removeEntry(T entry);
+    //public abstract void removeEntry(int entryID);
 }

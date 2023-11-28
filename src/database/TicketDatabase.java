@@ -10,18 +10,24 @@ import java.util.Objects;
 
 public class TicketDatabase extends Database<TicketEntry> {
     private static TicketDatabase database;
-    private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> totalEqualTicketList;
-    private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> totalTicketList;
-    private Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>> payerEqualMap;
-    private Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>> payerMap;
-    private Map<TicketEntry.eventsEnum, Double> eventEqualMap;
-    private Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> eventMap;
-
+    private final HashMap<Object, Object> ticketPerson;
+    private ArrayList<Map<String, Map<String, Map<String, Double>>>> finalTicketList;
+    //private Map<String, ArrayList<Map<PersonEntry,Double>>> finalTicket;
+    //private Map<String, Double> eventMap;
+    private Map<String, Double> ticketMap;
+    private Map<String, Map<String, Double>> eventMap;
+    private Map<String, Map<String, Map<String, Double>>> payerMap;
+    private String event;
+    private boolean split;
+    private PersonDatabase p;
+    private String payer;
     private TicketEntry t;
+    public enum events {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS};
+    private TicketDatabase.events myEvent;
+    private double full_price = 0.0;
 
     private TicketDatabase() {
-        this.totalTicketList = new ArrayList<>();
-        this.totalEqualTicketList = new ArrayList<>();
+        this.ticketPerson = new HashMap<>();
     }
 
     public static TicketDatabase getInstance() {
@@ -31,51 +37,62 @@ public class TicketDatabase extends Database<TicketEntry> {
         return database;
     }
     public void addEntry(TicketEntry ticket) {
-        ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
-        Map<PersonEntry, Double> ticketMap = ticket.getMap();
-        PersonEntry payer = ticket.getPayer();
+        /*ticketPerson.put(ticket.getPerson(),ticket.getPrice());
+        ticketsGroup.add(ticketPerson);*/
+        //finalTicket.put(ticket.getEvent(), ticketsGroup); CHECK LATER
 
-        if (ticket.isSplit()) {     // equally split
-            for (PersonEntry personEntry : personList) {
-                if (Objects.equals(personEntry.getName(), payer.getName())) {
-                    for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
-                        if (elem == ticket.getEvent()) {
-                            double full_price = 0;
-                            for (double price : ticket.getMap().values()) {
-                                full_price += price;
-                            }
-                            eventEqualMap.put(ticket.getEvent(),full_price);
-                            payerEqualMap.put(payer, eventEqualMap);
-                            totalEqualTicketList.add(payerEqualMap);
-                        } else {
-                            eventEqualMap = new HashMap<>();
-                        }
-                    }
-                } else {
-                    payerEqualMap = new HashMap<>();
+        /*if (ticket.isSplit())
+            this.ticketPerson.put(ticket.getPerson(),ticket.getPrice());
+        else
+            this.event = ticket.getEvent();*/
+        ArrayList<PersonEntry> personList = p.getInstance().getGroup();
+        payer = ticket.getPayer();
+        for(PersonEntry personEntry : personList){
+            if(Objects.equals(personEntry.getName(), payer)){
+                String return_val = "null";
+                switch (ticket.getEvent()) {
+                    case RESTAURANT:
+                        return_val = "restaurant";
+                        break;
+                    case CINEMA:
+                        return_val = "cinema";
+                        break;
+                    case TAXI:
+                        return_val = "taxi";
+                        break;
+                    case CONCERT:
+                        return_val = "concert";
+                        break;
+                    case AIRPLANE:
+                        return_val = "airplane";
+                        break;
+                    case BUS:
+                        return_val = "bus";
+                        break;
+                    case OTHERS:
+                        return_val = this.event;
+                        break;
                 }
-            }
-        } else {        // not equally split
-            for (PersonEntry personEntry : personList) {
-                if (Objects.equals(personEntry.getName(), payer.getName())) {
-                    for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
-                        if (elem == ticket.getEvent()) {
-                            eventMap.put(ticket.getEvent(), ticketMap);
-                            payerMap.put(payer, eventMap);
-                            totalTicketList.add(payerMap);
-                        } else {
-                            eventMap = new HashMap<>();
-                        }
+                event = return_val;
+                if(Objects.equals(event, ticket.getEvent())){
+                    if(t.isSplit()){
+                        //full_price = full_price + t.getPrice();
+                        eventMap.put(event,ticketMap);
+                        payerMap.put(payer,eventMap);
+                        finalTicketList.add(payerMap);
                     }
-                } else {
-                    payerMap = new HashMap<>();
+                    else {
+                        eventMap.put(event,ticketMap);
+                        payerMap.put(payer,eventMap);
+                        finalTicketList.add(payerMap);
+                    }
                 }
             }
         }
     }
 
     public void removeEntry(TicketEntry ticket) {
-
+        t.clear();
     }
 
 }

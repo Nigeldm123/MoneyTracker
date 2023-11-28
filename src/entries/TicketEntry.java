@@ -1,24 +1,19 @@
 package entries;
 
-import database.PersonDatabase;
-
 import java.util.Map;
 
 public class TicketEntry {
-    private final Map<PersonEntry, Double> ticketMap;
+    private final Map<PersonEntry, Double> map;
     private PersonEntry person;
     private Double price;
-
-    public enum eventsEnum {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS}
-
-    ;
-    private eventsEnum myEvent;
-    private eventsEnum event;
+    public enum events {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS};
+    private events myEvent;
+    private events event;
     private boolean split;      // true = evenly split      false = not evenly split
-    private PersonEntry payer;
+    private String payer;
 
-    public TicketEntry(Map<PersonEntry, Double> map, eventsEnum event, boolean split, PersonEntry payer) {
-        this.ticketMap = map;
+    public TicketEntry(Map<PersonEntry,Double> map, events event, boolean split, String payer) {
+        this.map = map;
         this.event = event;
         this.split = split;
         this.payer = payer;     // check person who payed in list of people in group
@@ -37,24 +32,52 @@ public class TicketEntry {
         return split;
     }
 
-    public eventsEnum getEvent() {
+    public events getEvent() {
         return event;
     }
 
-    public PersonEntry getPayer() {
+    public String getPayer() {
         return payer;
     }
 
-    public void setPayer(PersonEntry payer) {
+    public void setPayer(String payer) {
         this.payer = payer;
     }
 
     public Map<PersonEntry, Double> getMap() {
-        return ticketMap;
+        return map;
     }
 
-    public void clear() {
-        ticketMap.clear();
+    public void clear(){
+        map.clear();
     }
+
+/*public String getEvent() {
+        String return_val;
+        switch (myEvent) {
+            case RESTAURANT:
+                return_val = "restaurant";
+                break;
+            case CINEMA:
+                return_val = "cinema";
+                break;
+            case TAXI:
+                return_val = "taxi";
+                break;
+            case CONCERT:
+                return_val = "concert";
+                break;
+            case AIRPLANE:
+                return_val = "airplane";
+                break;
+            case BUS:
+                return_val = "bus";
+                break;
+            case OTHERS:
+                return_val = this.event;
+                break;
+        }
+        return return_val;
+    }*/
 
 }

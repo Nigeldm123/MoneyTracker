@@ -20,8 +20,9 @@ public class Main {
         PersonDatabase p = PersonDatabase.getInstance();
         TicketDatabase t = TicketDatabase.getInstance();
         Map<PersonEntry, Double> map = new HashMap<>();
-        TicketEntry.eventsEnum event1 = TicketEntry.eventsEnum.CINEMA;
+        TicketEntry.events event1 = TicketEntry.events.CINEMA;
         boolean split1 = true;
+        String payer1 = "Nigel";
         PersonEntry person = new PersonEntry("Femmie");
         PersonEntry person2 = new PersonEntry("Nigel");
         PersonEntry person3 = new PersonEntry("Jeff");
@@ -31,23 +32,17 @@ public class Main {
         map.put(person,10.0);
         map.put(person2,30.0);
         map.put(person3,20.0);
-        TicketEntry ticket = new TicketEntry(map,event1,split1,person2);
-        print(ticket);
+        TicketEntry ticket = new TicketEntry(map,event1,split1,payer1);
+        print(ticket,person);
         t.addEntry(ticket);
         /*t.removeEntry(ticket);
         print(ticket,person);*/
     }
 
-    public void print(TicketEntry t)
+    public void print(TicketEntry t, PersonEntry p)
     {
-        System.out.println("Equal (true) or not equal (false) split: " + t.isSplit()
-                + "\nPayer: " + t.getPayer().getName()
-                + "\nEvent: " + t.getEvent()
-                + "\nPrice per person: ");
-                for (PersonEntry person : t.getMap().keySet()) {
-                    double price = t.getMap().get(person);
-                    System.out.println(person.getName()+" - EUR "+price);
-                }
-                System.out.println();
+        System.out.println(p.getName() +
+                " " + t.getEvent() + " " + t.getPayer() + " " + t.isSplit() + " " + t.getPrice() + " " + t.getPerson() + " " + " " + t.getMap().values()
+        );
     }
 }
