@@ -92,7 +92,7 @@ public class TicketDatabase extends Database<TicketEntry> {
     }
 
     public void removeEntry(TicketEntry ticket) {
-        //ticketsGroup.remove(ticket.getPerson(),ticket.getPrice());
+        t.clear();
     }
 
 }
