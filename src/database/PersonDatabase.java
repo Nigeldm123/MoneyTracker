@@ -2,13 +2,17 @@ package database;
 
 import entries.PersonEntry;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class PersonDatabase extends Database<PersonEntry> {
     private static PersonDatabase database;
     private ArrayList<PersonEntry> group;
+    private PropertyChangeSupport support;
 
     private PersonDatabase() {
+        this.support = new PropertyChangeSupport(this);
         this.group = new ArrayList<>();
     }
 
@@ -20,22 +24,17 @@ public class PersonDatabase extends Database<PersonEntry> {
     }
 
     public void addEntry(PersonEntry person) {
-        group.add(person);
+        support.firePropertyChange(person.getName(), group, group.add(person));
     }
 
     public void removeEntry(PersonEntry person) {
-        group.remove(person);
+        support.firePropertyChange(person.getName(), group, group.remove(person));
     }
 
-    public PersonEntry getPerson(PersonEntry person) {
-        return person;
-    }
-
-    public ArrayList<PersonEntry> getGroup() {
-        return group;
-    }
-
-    /*public void printPersonList(){
-        System.out.println(group);
-    }*/
+    public void addObserver(PropertyChangeListener pcl){
+        support.addPropertyChangeListener(pcl);
+    };
+    public void removeObserver(PropertyChangeListener pcl){
+        support.removePropertyChangeListener(pcl);
+    };
 }

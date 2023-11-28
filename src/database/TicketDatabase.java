@@ -3,6 +3,8 @@ package database;
 import entries.PersonEntry;
 import entries.TicketEntry;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,9 @@ import java.util.Objects;
 
 public class TicketDatabase extends Database<TicketEntry> {
     private static TicketDatabase database;
+    private ArrayList<TicketEntry> ticketList;
+    private PropertyChangeSupport support;
+
     private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> totalEqualTicketList;
     private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> totalTicketList;
     private Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>> payerEqualMap;
@@ -20,8 +25,10 @@ public class TicketDatabase extends Database<TicketEntry> {
     private TicketEntry t;
 
     private TicketDatabase() {
-        this.totalTicketList = new ArrayList<>();
-        this.totalEqualTicketList = new ArrayList<>();
+        /*this.totalTicketList = new ArrayList<>();
+        this.totalEqualTicketList = new ArrayList<>();*/
+        this.support = new PropertyChangeSupport(this);
+        ticketList = new ArrayList<>();
     }
 
     public static TicketDatabase getInstance() {
@@ -31,7 +38,9 @@ public class TicketDatabase extends Database<TicketEntry> {
         return database;
     }
     public void addEntry(TicketEntry ticket) {
-        ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
+        ticketList.add(ticket);
+
+        /*ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
         Map<PersonEntry, Double> ticketMap = ticket.getMap();
         PersonEntry payer = ticket.getPayer();
 
@@ -71,12 +80,18 @@ public class TicketDatabase extends Database<TicketEntry> {
                     payerMap = new HashMap<>();
                 }
             }
-        }
+        }*/
     }
 
     public void removeEntry(TicketEntry ticket) {
-
-
+        ticketList.remove(ticket);
     }
+
+    public void addObserver(PropertyChangeListener pcl){
+        support.addPropertyChangeListener(pcl);
+    };
+    public void removeObserver(PropertyChangeListener pcl){
+        support.removePropertyChangeListener(pcl);
+    };
 
 }

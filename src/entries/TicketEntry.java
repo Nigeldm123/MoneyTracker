@@ -31,16 +31,8 @@ public class TicketEntry {
         return payer;
     }
 
-    public void setPayer(PersonEntry payer) {
-        this.payer = payer;
-    }
-
     public Map<PersonEntry, Double> getMap() {
         return ticketMap;
-    }
-
-    public void clear() {
-        ticketMap.clear();
     }
 
 }
