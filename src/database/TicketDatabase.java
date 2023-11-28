@@ -22,8 +22,6 @@ public class TicketDatabase extends Database<TicketEntry> {
     private Map<TicketEntry.eventsEnum, Double> eventEqualMap;
     private Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> eventMap;
 
-    private TicketEntry t;
-
     private TicketDatabase() {
         /*this.totalTicketList = new ArrayList<>();
         this.totalEqualTicketList = new ArrayList<>();*/
@@ -38,7 +36,7 @@ public class TicketDatabase extends Database<TicketEntry> {
         return database;
     }
     public void addEntry(TicketEntry ticket) {
-        ticketList.add(ticket);
+        support.firePropertyChange("",ticket, ticketList.add(ticket));
 
         /*ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
         Map<PersonEntry, Double> ticketMap = ticket.getMap();
@@ -84,7 +82,7 @@ public class TicketDatabase extends Database<TicketEntry> {
     }
 
     public void removeEntry(TicketEntry ticket) {
-        ticketList.remove(ticket);
+        support.firePropertyChange("",ticket, ticketList.remove(ticket));
     }
 
     public void addObserver(PropertyChangeListener pcl){

@@ -6,6 +6,6 @@ import java.beans.PropertyChangeListener;
 public class PersonDatabaseObserver implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropertyName() + " " + evt.getOldValue() + " " + evt.getNewValue());
+        System.out.println("Person added: "+evt.getPropertyName());
     }
 }
