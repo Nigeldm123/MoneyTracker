@@ -49,5 +49,6 @@ public class Main {
                     System.out.println(person.getName()+" - EUR "+price);
                 }
                 System.out.println();
+
     }
 }
