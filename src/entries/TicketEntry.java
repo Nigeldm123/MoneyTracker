@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TicketEntry {
     private final Map<PersonEntry, Double> ticketMap;
-    public enum eventsEnum {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS};
+    public enum eventsEnum {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS}
     private eventsEnum event;
     private boolean split;      // true = evenly split      false = not evenly split
     private PersonEntry payer;
