@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class globalBill {
+public class GlobalBill {
 
     private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> equalBill;
     private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> regularBill;
@@ -19,7 +19,7 @@ public class globalBill {
     private Map<TicketEntry.eventsEnum, Double> eventEqualMap;
     private Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> eventMap;
 
-    public globalBill(TicketDatabase tb) {
+    public GlobalBill(TicketDatabase tb) {
         equalBill = new ArrayList<>();
         regularBill = new ArrayList<>();
         for (TicketEntry ticket : tb.getTicketList()) {
@@ -38,7 +38,7 @@ public class globalBill {
 
         for (PersonEntry personEntry : personList) {
             if (Objects.equals(personEntry.getName(), payer.getName())) {
-                if (payerEqualMap.isEmpty()) {
+                if (payerEqualMap == null) {
                     payerEqualMap = new HashMap<>();
                 }
                 for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
@@ -47,16 +47,13 @@ public class globalBill {
                         for (double price : ticketMap.values()) {
                             full_price += price;
                         }
-                        if (eventEqualMap.isEmpty()) {
+                        if (eventEqualMap == null) {
                             eventEqualMap = new HashMap<>();
                         }
                         eventEqualMap.put(ticket.getEvent(), full_price);
                         payerEqualMap.put(payer, eventEqualMap);
                         equalBill.add(payerEqualMap);
-                    } else {
-                        eventEqualMap = new HashMap<>();
                     }
-
                 }
             }
         }
@@ -69,21 +66,44 @@ public class globalBill {
 
         for (PersonEntry personEntry : personList) {
             if (Objects.equals(personEntry.getName(), payer.getName())) {
-                if (payerMap.isEmpty()) {
+                if (payerMap == null) {
                     payerMap = new HashMap<>();
                 }
                 for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
                     if (elem == ticket.getEvent()) {
-                        if (eventMap.isEmpty()) {
+                        if (eventMap == null) {
                             eventMap = new HashMap<>();
                         }
                         eventMap.put(ticket.getEvent(), ticketMap);
                         payerMap.put(payer, eventMap);
                         regularBill.add(payerMap);
-
                     }
                 }
             }
         }
+    }
+
+    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> getEqualBill() {
+        return equalBill;
+    }
+
+    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> getRegularBill() {
+        return regularBill;
+    }
+
+    public Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>> getPayerEqualMap() {
+        return payerEqualMap;
+    }
+
+    public Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>> getPayerMap() {
+        return payerMap;
+    }
+
+    public Map<TicketEntry.eventsEnum, Double> getEventEqualMap() {
+        return eventEqualMap;
+    }
+
+    public Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> getEventMap() {
+        return eventMap;
     }
 }
