@@ -21,25 +21,22 @@ public class BillSplitter {
     public void payBill() {
         for (Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double, Set<PersonEntry>>>> equalBill : bill.getEqualBill()) {
             for (PersonEntry receiver : equalBill.keySet()) {
-                    paymentPerPerson = new HashMap<>();                                                 // for every receiver new bill
-                    for (TicketEntry.eventsEnum event : equalBill.get(receiver).keySet()) {
-                        Pair<Double, Set<PersonEntry>> ticket = equalBill.get(receiver).get(event);
-                        Integer amount_of_people = ticket.getValue1().size();
-                        Double pricePerPerson = ticket.getValue0() / amount_of_people;
+                paymentPerPerson = new HashMap<>();                                                 // for every receiver new bill
+                for (TicketEntry.eventsEnum event : equalBill.get(receiver).keySet()) {
+                    Pair<Double, Set<PersonEntry>> ticket = equalBill.get(receiver).get(event);
+                    Integer amount_of_people = ticket.getValue1().size();
+                    Double pricePerPerson = ticket.getValue0() / amount_of_people;
 
-                        for (PersonEntry payer : ticket.getValue1()) {
-                            if (paymentPerPerson.containsKey(payer)) {
-                                Double new_payment = paymentPerPerson.get(payer) + pricePerPerson;      // add new payment to already existing payment
-                                paymentPerPerson.replace(payer, new_payment);
-                            } else {
-                                paymentPerPerson.put(payer, pricePerPerson);
-                            }
+                    for (PersonEntry payer : ticket.getValue1()) {
+                        if (paymentPerPerson.containsKey(payer)) {
+                            Double new_payment = paymentPerPerson.get(payer) + pricePerPerson;      // add new payment to already existing payment
+                            paymentPerPerson.replace(payer, new_payment);
+                        } else {
+                            paymentPerPerson.put(payer, pricePerPerson);
                         }
                     }
                 }
             }
         }
-
-
     }
 }
