@@ -22,7 +22,7 @@ public class TicketDatabase extends Database<TicketEntry> {
     private Map<TicketEntry.eventsEnum, Double> eventEqualMap;
     private Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> eventMap;
 
-    private TicketDatabase() {
+    public TicketDatabase() {
         /*this.totalTicketList = new ArrayList<>();
         this.totalEqualTicketList = new ArrayList<>();*/
         this.support = new PropertyChangeSupport(this);

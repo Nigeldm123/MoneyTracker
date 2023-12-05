@@ -10,6 +10,7 @@ public class TicketDatabaseObserver implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         TicketEntry t = (TicketEntry) evt.getOldValue();
+        System.out.println();
         System.out.println("Equal (true) or not equal (false) split: " + t.isSplit()
                 + "\nPayer: " + t.getPayer().getName()
                 + "\nEvent: " + t.getEvent()

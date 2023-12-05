@@ -6,6 +6,7 @@ import entries.TicketEntry;
 import factories.TicketFactory;
 import observers.PersonDatabaseObserver;
 import observers.TicketDatabaseObserver;
+import view.ViewFrame;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,6 +27,9 @@ public class Main {
         p.addObserver(pOberserver);
         TicketDatabaseObserver tObserver = new TicketDatabaseObserver();
         t.addObserver(tObserver);
+
+        ViewFrame view = new ViewFrame();
+        view.initialize();
 
         Map<PersonEntry, Double> map = new HashMap<>();
         TicketEntry.eventsEnum event1 = TicketEntry.eventsEnum.CINEMA;
