@@ -48,9 +48,9 @@ public class GlobalBill {
                         if (eventEqualMap == null) {
                             eventEqualMap = new HashMap<>();
                         }
-                        Map<Double,Integer> ticketPrice = new HashMap<>();
+
                         Integer amount_people = ticketMap.keySet().size();
-                        ticketPrice.put(full_price,amount_people);
+                        Pair<Double,Integer> ticketPrice = new Pair<Double,Integer>(full_price,amount_people);
                         eventEqualMap.put(ticket.getEvent(), ticketPrice);
                         payerEqualMap.put(payer, eventEqualMap);
                         equalBill.add(payerEqualMap);
@@ -84,7 +84,7 @@ public class GlobalBill {
         }
     }
 
-    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<Double,Integer>>>> getEqualBill() {
+    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double,Integer>>>> getEqualBill() {
         return equalBill;
     }
 
