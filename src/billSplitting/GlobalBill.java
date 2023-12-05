@@ -4,19 +4,17 @@ import database.TicketDatabase;
 import database.PersonDatabase;
 import entries.PersonEntry;
 import entries.TicketEntry;
+import org.javatuples.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class GlobalBill {
 
-    private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> equalBill;
+    private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double,Integer>>>> equalBill;
     private ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> regularBill;
-    private Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>> payerEqualMap;
+    private Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double,Integer>>> payerEqualMap;
     private Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>> payerMap;
-    private Map<TicketEntry.eventsEnum, Double> eventEqualMap;
+    private Map<TicketEntry.eventsEnum, Pair<Double,Integer>> eventEqualMap;
     private Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> eventMap;
 
     public GlobalBill(TicketDatabase tb) {
@@ -50,7 +48,10 @@ public class GlobalBill {
                         if (eventEqualMap == null) {
                             eventEqualMap = new HashMap<>();
                         }
-                        eventEqualMap.put(ticket.getEvent(), full_price);
+                        Map<Double,Integer> ticketPrice = new HashMap<>();
+                        Integer amount_people = ticketMap.keySet().size();
+                        ticketPrice.put(full_price,amount_people);
+                        eventEqualMap.put(ticket.getEvent(), ticketPrice);
                         payerEqualMap.put(payer, eventEqualMap);
                         equalBill.add(payerEqualMap);
                     }
@@ -83,27 +84,11 @@ public class GlobalBill {
         }
     }
 
-    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>>> getEqualBill() {
+    public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<Double,Integer>>>> getEqualBill() {
         return equalBill;
     }
 
     public ArrayList<Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>>> getRegularBill() {
         return regularBill;
-    }
-
-    public Map<PersonEntry, Map<TicketEntry.eventsEnum, Double>> getPayerEqualMap() {
-        return payerEqualMap;
-    }
-
-    public Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>> getPayerMap() {
-        return payerMap;
-    }
-
-    public Map<TicketEntry.eventsEnum, Double> getEventEqualMap() {
-        return eventEqualMap;
-    }
-
-    public Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>> getEventMap() {
-        return eventMap;
     }
 }

@@ -16,8 +16,6 @@ public class TicketDatabase extends Database<TicketEntry> {
     private PropertyChangeSupport support;
 
     private TicketDatabase() {
-        /*this.totalTicketList = new ArrayList<>();
-        this.totalEqualTicketList = new ArrayList<>();*/
         this.support = new PropertyChangeSupport(this);
         ticketList = new ArrayList<>();
     }
