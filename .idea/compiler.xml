@@ -9,5 +9,8 @@
         <module name="MoneyTracerGit" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Lab3" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -37,4 +37,8 @@ public class PersonDatabase extends Database<PersonEntry> {
     public void removeObserver(PropertyChangeListener pcl){
         support.removePropertyChangeListener(pcl);
     };
+
+    public ArrayList<PersonEntry> getGroup() {
+        return group;
+    }
 }

@@ -1,3 +1,4 @@
+import billSplitting.GlobalBill;
 import database.Database;
 import database.PersonDatabase;
 import database.TicketDatabase;
@@ -47,6 +48,9 @@ public class Main {
         TicketFactory factory = new TicketFactory();
         TicketEntry ticket1 = factory.getTicket(map,event1,split1,person2);
         t.addEntry(ticket1);
+
+        GlobalBill bill = new GlobalBill(t);
+        System.out.println(bill);
     }
 
 }
