@@ -1,3 +1,4 @@
+import billSplitting.BillSplitter;
 import billSplitting.GlobalBill;
 import database.Database;
 import database.PersonDatabase;
@@ -34,7 +35,7 @@ public class Main {
 
         Map<PersonEntry, Double> map = new HashMap<>();
         TicketEntry.eventsEnum event1 = TicketEntry.eventsEnum.CINEMA;
-        boolean split1 = true;
+        boolean split1 = false;
         PersonEntry person = new PersonEntry("Femmie");
         PersonEntry person2 = new PersonEntry("Nigel");
         PersonEntry person3 = new PersonEntry("Jeff");
@@ -50,7 +51,16 @@ public class Main {
         t.addEntry(ticket1);
 
         GlobalBill bill = new GlobalBill(t);
-        System.out.println(bill);
+        BillSplitter splitter = new BillSplitter(bill);
+        splitter.payBill();
+        for (PersonEntry receiver : splitter.getTotalPayment().keySet()) {
+            System.out.println("Receiver: "+receiver.getName());
+            System.out.println("Payers: ");
+            for (PersonEntry payer : splitter.getTotalPayment().get(receiver).keySet()) {
+                System.out.println("          "+payer.getName()+"          "+splitter.getTotalPayment().get(receiver).get(payer));
+            }
+        }
+
     }
 
 }
