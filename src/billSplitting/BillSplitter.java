@@ -20,6 +20,11 @@ public class BillSplitter {
     }
 
     public void payBill() {
+        System.out.println("=== Debugging payBill===");
+        System.out.println("Number of equal bills: " + bill.getEqualBill().size());
+        System.out.println("Number of regular bills: " + bill.getRegularBill().size());
+
+
         for (Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double, Set<PersonEntry>>>> equalBill : bill.getEqualBill()) {
             for (PersonEntry receiver : equalBill.keySet()) {
                 paymentPerPerson = new HashMap<>();                                                 // for every payer new bill
@@ -57,19 +62,21 @@ public class BillSplitter {
                     }
                 }
 
-                if (totalPayment.containsKey(receiver)) {
+                /*if (totalPayment.containsKey(receiver)) {
                     Map<PersonEntry,Double> oldPaymentPerPerson = totalPayment.get(receiver);
                     oldPaymentPerPerson.forEach(
                             (key, value) -> paymentPerPerson.merge(key, value, Double::sum));       // merge two existing maps (old + new)
                     totalPayment.replace(receiver,paymentPerPerson);
-                } else {
+                } else {*/
                     totalPayment.put(receiver,paymentPerPerson);
-                }
+                //}
             }
         }
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
+        System.out.println("Final totalPayment map: " + totalPayment);
+        System.out.println("===========================");
         return totalPayment;
     }
 }

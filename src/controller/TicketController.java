@@ -1,6 +1,5 @@
 package controller;
 
-import database.PersonDatabase;
 import database.TicketDatabase;
 import entries.TicketEntry;
 
@@ -20,4 +19,9 @@ public class TicketController implements ControllerT{
     public void removeEntry(TicketEntry T) {
         db.removeEntry(T);
     }
+
+    public TicketDatabase getDatabase(){
+        return db;
+    }
 }
+

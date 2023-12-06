@@ -1,6 +1,5 @@
 import billSplitting.BillSplitter;
 import billSplitting.GlobalBill;
-import database.Database;
 import database.PersonDatabase;
 import database.TicketDatabase;
 import entries.PersonEntry;
@@ -10,7 +9,6 @@ import observers.PersonDatabaseObserver;
 import observers.TicketDatabaseObserver;
 import view.ViewFrame;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +34,7 @@ public class Main {
         Map<PersonEntry, Double> map = new HashMap<>();
         TicketEntry.eventsEnum event1 = TicketEntry.eventsEnum.CINEMA;
         boolean split1 = false;
-        PersonEntry person = new PersonEntry("Femmie");
+        /*PersonEntry person = new PersonEntry("Femmie");
         PersonEntry person2 = new PersonEntry("Nigel");
         PersonEntry person3 = new PersonEntry("Jeff");
         p.addEntry(person);
@@ -48,7 +46,7 @@ public class Main {
 
         TicketFactory factory = new TicketFactory();
         TicketEntry ticket1 = factory.getTicket(map,event1,split1,person2);
-        t.addEntry(ticket1);
+        t.addEntry(ticket1);*/
 
         GlobalBill bill = new GlobalBill(t);
         BillSplitter splitter = new BillSplitter(bill);

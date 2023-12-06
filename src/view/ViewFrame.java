@@ -20,7 +20,7 @@ public class ViewFrame extends JFrame {
         super("TEMP");
     }
     public void initialize() {
-        this.setSize(500, 300);
+        this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         GridBagLayout layout = new GridBagLayout();
