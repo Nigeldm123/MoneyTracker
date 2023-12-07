@@ -1,5 +1,7 @@
 import billSplitting.BillSplitter;
 import billSplitting.GlobalBill;
+import controller.PersonController;
+import controller.TicketController;
 import database.PersonDatabase;
 import database.TicketDatabase;
 import entries.PersonEntry;
@@ -28,13 +30,16 @@ public class Main {
         TicketDatabaseObserver tObserver = new TicketDatabaseObserver();
         t.addObserver(tObserver);
 
+        /*PersonController controllerP = new PersonController(p);
+        TicketController controllerT = new TicketController(t);*/
+
         ViewFrame view = new ViewFrame();
         view.initialize();
 
-        Map<PersonEntry, Double> map = new HashMap<>();
+        /*Map<PersonEntry, Double> map = new HashMap<>();
         TicketEntry.eventsEnum event1 = TicketEntry.eventsEnum.CINEMA;
         boolean split1 = false;
-        /*PersonEntry person = new PersonEntry("Femmie");
+        PersonEntry person = new PersonEntry("Femmie");
         PersonEntry person2 = new PersonEntry("Nigel");
         PersonEntry person3 = new PersonEntry("Jeff");
         p.addEntry(person);
@@ -46,7 +51,16 @@ public class Main {
 
         TicketFactory factory = new TicketFactory();
         TicketEntry ticket1 = factory.getTicket(map,event1,split1,person2);
-        t.addEntry(ticket1);*/
+        t.addEntry(ticket1);
+
+        Map<PersonEntry, Double> map2 = new HashMap<>();
+
+        map2.put(person,10.0);
+        map2.put(person2,20.0);
+        map2.put(person3,30.0);
+
+        TicketEntry ticket2 = factory.getTicket(map2,event1,false,person);
+        t.addEntry(ticket2);
 
         GlobalBill bill = new GlobalBill(t);
         BillSplitter splitter = new BillSplitter(bill);
@@ -57,7 +71,7 @@ public class Main {
             for (PersonEntry payer : splitter.getTotalPayment().get(receiver).keySet()) {
                 System.out.println("          "+payer.getName()+"          "+splitter.getTotalPayment().get(receiver).get(payer));
             }
-        }
+        }*/
 
     }
 

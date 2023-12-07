@@ -11,13 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ViewFrame extends JFrame {
-    PersonController personController = new PersonController(PersonDatabase.getInstance());
-    TicketController ticketController = new TicketController(TicketDatabase.getInstance());
+    PersonController personController;
+    TicketController ticketController;
     ListPanel panel;
     GUI buttons;
 
     public ViewFrame(){
-        super("TEMP");
+        super("GUI");
+        personController = new PersonController(PersonDatabase.getInstance());
+        ticketController = new TicketController(TicketDatabase.getInstance());
     }
     public void initialize() {
         this.setSize(1000, 600);

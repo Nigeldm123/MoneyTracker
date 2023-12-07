@@ -62,14 +62,16 @@ public class BillSplitter {
                     }
                 }
 
-                /*if (totalPayment.containsKey(receiver)) {
+                if (totalPayment.containsKey(receiver)) {
                     Map<PersonEntry,Double> oldPaymentPerPerson = totalPayment.get(receiver);
                     oldPaymentPerPerson.forEach(
                             (key, value) -> paymentPerPerson.merge(key, value, Double::sum));       // merge two existing maps (old + new)
                     totalPayment.replace(receiver,paymentPerPerson);
-                } else {*/
+                } else {
                     totalPayment.put(receiver,paymentPerPerson);
-                //}
+                    System.out.println("receiver: " + receiver.getName() + ", " +receiver);
+                    System.out.println("payment per person: " + paymentPerPerson);
+                }
             }
         }
     }

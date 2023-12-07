@@ -180,18 +180,26 @@ public class GUI extends JPanel {
                 this.add(button);
                 button.addActionListener(new ActionListener() {
                     private TicketEntry t;
+                    private PersonEntry selectedPerson;
+
+                    public ActionListener init(PersonEntry personEntry) {
+                        this.selectedPerson = personEntry;
+                        return this;
+                    }
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        p = new PersonEntry(person);
-                        payer = p;
+                        payer = selectedPerson;
                         TicketFactory factory = new TicketFactory();
-                        this.t = factory.getTicket(map, event, split, payer);
+                        // Create a new map for each TicketEntry
+                        Map<PersonEntry, Double> currentMap = new HashMap<>(map);
+                        this.t = factory.getTicket(currentMap, event, split, payer);
                         controllerT.addEntry(t);
+                        System.out.println("Entry we add to dataBase:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
                         clearFrame();
-                        endScreen(); //?
+                        endScreen();
                     }
-                });
+                }.init(controllerP.getEntryByName(person)));
             }
         });
     }
@@ -208,10 +216,12 @@ public class GUI extends JPanel {
     public void addCalculateButtonListener(){
         calculate.addActionListener(listenerList -> {
             GlobalBill bill = new GlobalBill(controllerT.getDatabase());
-            BillSplitter billSplitter = new BillSplitter(bill);
+            System.out.println("dataBase: " + controllerT.getDatabase().getTicketList().get(0).getMap() + " " + controllerT.getDatabase().getTicketList().get(1).getMap());
+            System.out.println("Bill: " + bill.getRegularBill());
+            BillSplitter billSplitter = new BillSplitter(bill); //I think error is here!!!!, Bill contains the exact same list 2 times!!!
             billSplitter.payBill();
             mapPayment = billSplitter.getTotalPayment();
-            //System.out.println(mapPayment.values());
+            System.out.println("hello GUI here: " + mapPayment.values());
             clearFrame();
             finalBill(mapPayment);
         });
@@ -226,16 +236,19 @@ public class GUI extends JPanel {
 
     private void resetTicketVariables() {
         // Reset ticket-related variables and components
-        //map.clear();
+        map.clear();
         //mapPayment.clear();
         payer = null;
         event = TicketEntry.eventsEnum.CINEMA; // Reset the event
         split = true; // Reset the split value
 
         // Clear the list of names
-        nameList.clear();
+        //nameList.clear();
 
         extraTicket.setEnabled(true); // Enable the extraTicket button
+
+        //mapPayment.clear();
+        //System.out.println(mapPayment);
 
         // Reset ticket-related variables and components
         clearValues();
@@ -264,20 +277,19 @@ public class GUI extends JPanel {
 
             // Exclude the payer from the label
             for (Map.Entry<PersonEntry, Double> amountEntry : amounts.entrySet()) {
-                otherPerson = amountEntry.getKey();
-                amount = amountEntry.getValue();
+                PersonEntry currentPerson = amountEntry.getKey();
+                double currentAmount = amountEntry.getValue();
                 //System.out.println(otherPerson.getName());
                 //System.out.println(amount);
 
-                if (!payerName.equals(otherPerson.getName()) && !includedPersons.contains(otherPerson.getName())) {
+                if (!payerName.equals(currentPerson.getName()) && !includedPersons.contains(currentPerson.getName())) {
                     // Format the double value with two decimal places
-                    String formattedAmount = String.format("%.2f", amount);
-                    labelText.append(otherPerson.getName()).append(" pays ").append(formattedAmount).append(", ");
-
-                    includedPersons.add(otherPerson.getName());
+                    String formattedAmount = String.format("%.2f", currentAmount);
+                    labelText.append(currentPerson.getName()).append(" pays ").append(formattedAmount).append(", ");
+                    includedPersons.add(currentPerson.getName());
                 }
             }
-
+            includedPersons.clear();
             // Remove the trailing ", " from the label text
             if (labelText.length() > 2) {
                 labelText.delete(labelText.length() - 2, labelText.length());
@@ -288,7 +300,7 @@ public class GUI extends JPanel {
         }
         // Ensure names are not overwritten
         clearValues();
-    }
+    } //still needs some debugging!!!!! something goes wrong!
 
 
 
@@ -303,8 +315,8 @@ public class GUI extends JPanel {
         nameP.setText("");
         event1.setText("");
         //map.clear(); //???
-        payer = null;
-        split = true;
-        nameList.clear();  // Clear the list of names
+        /*payer = null;
+        split = true;*/
+        //nameList.clear();  // Clear the list of names
     }
 }

@@ -20,4 +20,13 @@ public class PersonController implements ControllerP {
     public void removeEntry(PersonEntry P) {
         db.removeEntry(P);
     }
+
+    public PersonEntry getEntryByName(String name) {
+        for (PersonEntry personEntry : db.getGroup()) {
+            if (personEntry.getName().equals(name)) {
+                return personEntry;
+            }
+        }
+        return null; // Return null if no matching entry is found
+    }
 }
