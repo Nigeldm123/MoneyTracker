@@ -2,7 +2,7 @@ package iteratorPattern;
 
 import database.TicketDatabase;
 
-public class TicketDatabaseIterator implements Iterator {
+public class TicketDatabaseIterator implements DatabaseIterator {
     int index;
     TicketDatabase t = TicketDatabase.getInstance();
     @Override

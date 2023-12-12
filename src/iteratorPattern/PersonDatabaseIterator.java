@@ -2,7 +2,7 @@ package iteratorPattern;
 
 import database.PersonDatabase;
 
-public class PersonDatabaseIterator implements Iterator {
+public class PersonDatabaseIterator implements DatabaseIterator {
     int index;
     PersonDatabase p = PersonDatabase.getInstance();
     @Override

@@ -1,17 +1,12 @@
 package database;
 
-import entries.PersonEntry;
 import entries.TicketEntry;
-import iteratorPattern.Iterator;
-import iteratorPattern.PersonDatabaseIterator;
+import iteratorPattern.DatabaseIterator;
 import iteratorPattern.TicketDatabaseIterator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 public class TicketDatabase extends Database<TicketEntry> {
     private static TicketDatabase database;
@@ -48,7 +43,7 @@ public class TicketDatabase extends Database<TicketEntry> {
         return ticketList;
     }
 
-    public Iterator getIterator() {
+    public DatabaseIterator getIterator() {
         return new TicketDatabaseIterator();
     }
 

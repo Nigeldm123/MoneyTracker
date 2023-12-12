@@ -1,5 +1,5 @@
 package iteratorPattern;
 
 public interface Container {
-    public Iterator getIterator();
+    public DatabaseIterator getIterator();
 }

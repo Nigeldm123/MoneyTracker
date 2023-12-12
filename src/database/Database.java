@@ -1,10 +1,8 @@
 package database;
 
 import iteratorPattern.Container;
-import iteratorPattern.Iterator;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
 public abstract class Database<T> implements Container {
     protected Database() {}

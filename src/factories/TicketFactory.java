@@ -5,8 +5,12 @@ import entries.TicketEntry;
 
 import java.util.Map;
 
-public class TicketFactory {
-    public TicketEntry getTicket(Map<PersonEntry, Double> map,TicketEntry.eventsEnum event, Boolean split, PersonEntry person){
-        return new TicketEntry(map,event,split,person);
-    }
+public abstract class TicketFactory {
+    public abstract TicketEntry getRestaurantTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public abstract TicketEntry getCinemaTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public abstract TicketEntry getTaxiTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public abstract TicketEntry getAirplaneTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public abstract TicketEntry getBusTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public abstract TicketEntry getTicket(Map<PersonEntry, Double> map, PersonEntry person);
+
 }
