@@ -2,6 +2,9 @@ package database;
 
 import entries.PersonEntry;
 import entries.TicketEntry;
+import iteratorPattern.Iterator;
+import iteratorPattern.PersonDatabaseIterator;
+import iteratorPattern.TicketDatabaseIterator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -43,6 +46,14 @@ public class TicketDatabase extends Database<TicketEntry> {
 
     public ArrayList<TicketEntry> getTicketList() {
         return ticketList;
+    }
+
+    public Iterator getIterator() {
+        return new TicketDatabaseIterator();
+    }
+
+    public Integer size() {
+        return ticketList.size();
     }
 
 }
