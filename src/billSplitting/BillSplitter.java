@@ -20,6 +20,11 @@ public class BillSplitter {
     }
 
     public void payBill() {
+        System.out.println("=== Debugging payBill===");
+        System.out.println("Number of equal bills: " + bill.getEqualBill().size());
+        System.out.println("Number of regular bills: " + bill.getRegularBill().size());
+
+
         for (Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double, Set<PersonEntry>>>> equalBill : bill.getEqualBill()) {
             for (PersonEntry receiver : equalBill.keySet()) {
                 paymentPerPerson = new HashMap<>();                                                 // for every payer new bill
@@ -64,12 +69,16 @@ public class BillSplitter {
                     totalPayment.replace(receiver,paymentPerPerson);
                 } else {
                     totalPayment.put(receiver,paymentPerPerson);
+                    System.out.println("receiver: " + receiver.getName() + ", " +receiver);
+                    System.out.println("payment per person: " + paymentPerPerson);
                 }
             }
         }
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
+        System.out.println("Final totalPayment map: " + totalPayment);
+        System.out.println("===========================");
         return totalPayment;
     }
 }

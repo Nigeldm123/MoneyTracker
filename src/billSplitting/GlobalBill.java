@@ -1,7 +1,7 @@
 package billSplitting;
 
-import database.TicketDatabase;
 import database.PersonDatabase;
+import database.TicketDatabase;
 import entries.PersonEntry;
 import entries.TicketEntry;
 import org.javatuples.Pair;
