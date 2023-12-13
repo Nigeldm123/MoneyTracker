@@ -1,6 +1,8 @@
 package database;
 
 import entries.PersonEntry;
+import iteratorPattern.PersonDatabaseIterator;
+import iteratorPattern.DatabaseIterator;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -41,4 +43,13 @@ public class PersonDatabase extends Database<PersonEntry> {
     public ArrayList<PersonEntry> getGroup() {
         return group;
     }
+
+    public DatabaseIterator getIterator() {
+        return new PersonDatabaseIterator();
+    }
+
+    public Integer size() {
+        return group.size();
+    }
+
 }

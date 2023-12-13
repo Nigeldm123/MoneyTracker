@@ -3,7 +3,7 @@ package controller;
 import database.TicketDatabase;
 import entries.TicketEntry;
 
-public class TicketController implements ControllerT{
+public class TicketController implements ControllerInterface<TicketEntry> {
 
     private TicketDatabase db;
     public TicketController(TicketDatabase db){

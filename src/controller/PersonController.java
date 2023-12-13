@@ -1,11 +1,9 @@
 package controller;
 
 import database.PersonDatabase;
-import database.TicketDatabase;
 import entries.PersonEntry;
-import entries.TicketEntry;
 
-public class PersonController implements ControllerP {
+public class PersonController implements ControllerInterface<PersonEntry> {
     private PersonDatabase db;
     public PersonController(PersonDatabase db){
         this.db = db;
