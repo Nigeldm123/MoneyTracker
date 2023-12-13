@@ -35,7 +35,7 @@ public class Main {
         ViewFrame view = new ViewFrame();
         view.initialize();
 
-        TicketFactory evenFact = new EvenTicketFactory();
+        /*TicketFactory evenFact = new EvenTicketFactory();
         TicketFactory unevenFact = new UnevenTicketFactory();
 
         PersonEntry person = new PersonEntry("Femmie");
@@ -70,7 +70,7 @@ public class Main {
                     System.out.println("          " + payer.getName() + "          " + splitter.getTotalPayment().get(receiver).get(payer));
                 }
             }
-        }
+        }*/
 
     }
 
