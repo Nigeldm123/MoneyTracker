@@ -7,6 +7,7 @@ import database.TicketDatabase;
 import entries.PersonEntry;
 import entries.TicketEntry;
 import factories.EvenTicketFactory;
+import factories.FactoryProvider;
 import factories.TicketFactory;
 import factories.UnevenTicketFactory;
 import observers.PersonDatabaseObserver;
@@ -35,8 +36,8 @@ public class Main {
         ViewFrame view = new ViewFrame();
         view.initialize();
 
-        /*TicketFactory evenFact = new EvenTicketFactory();
-        TicketFactory unevenFact = new UnevenTicketFactory();
+        /*TicketFactory evenFact = FactoryProvider.EvenTicket();
+        TicketFactory unevenFact = FactoryProvider.UnevenTicket();
 
         PersonEntry person = new PersonEntry("Femmie");
         PersonEntry person2 = new PersonEntry("Nigel");
