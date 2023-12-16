@@ -5,12 +5,12 @@ import entries.TicketEntry;
 
 import java.util.Map;
 
-public abstract class TicketFactory {
-    public abstract TicketEntry getRestaurantTicket(Map<PersonEntry, Double> map, PersonEntry person);
-    public abstract TicketEntry getCinemaTicket(Map<PersonEntry, Double> map, PersonEntry person);
-    public abstract TicketEntry getTaxiTicket(Map<PersonEntry, Double> map, PersonEntry person);
-    public abstract TicketEntry getAirplaneTicket(Map<PersonEntry, Double> map, PersonEntry person);
-    public abstract TicketEntry getBusTicket(Map<PersonEntry, Double> map, PersonEntry person);
-    public abstract TicketEntry getTicket(Map<PersonEntry, Double> map, PersonEntry person);
+public interface TicketFactory {
+    public TicketEntry getRestaurantTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public TicketEntry getCinemaTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public TicketEntry getTaxiTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public TicketEntry getAirplaneTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public TicketEntry getBusTicket(Map<PersonEntry, Double> map, PersonEntry person);
+    public TicketEntry getTicket(Map<PersonEntry, Double> map, PersonEntry person);
 
 }

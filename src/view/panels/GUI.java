@@ -7,6 +7,7 @@ import controller.TicketController;
 import entries.PersonEntry;
 import entries.TicketEntry;
 import factories.EvenTicketFactory;
+import factories.FactoryProvider;
 import factories.TicketFactory;
 import factories.UnevenTicketFactory;
 
@@ -204,7 +205,7 @@ public class GUI extends JPanel {
                         payer = selectedPerson;
                         Map<PersonEntry, Double> currentMap = new HashMap<>(map);
                         if(split) {
-                            TicketFactory evenFact = new EvenTicketFactory();
+                            TicketFactory evenFact = FactoryProvider.EvenTicket();
                             switch (eventString) {
                                 case "cinema":
                                     this.t = evenFact.getCinemaTicket(currentMap, payer);
@@ -227,7 +228,7 @@ public class GUI extends JPanel {
                             }
                         }
                         else {
-                            TicketFactory unevenFact = new UnevenTicketFactory();
+                            TicketFactory unevenFact = FactoryProvider.UnevenTicket();
                             switch (eventString) {
                                 case "cinema":
                                     this.t = unevenFact.getCinemaTicket(currentMap, payer);

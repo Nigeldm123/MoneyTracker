@@ -5,7 +5,7 @@ import entries.TicketEntry;
 
 import java.util.Map;
 
-public class EvenTicketFactory extends TicketFactory {
+public class EvenTicketFactory implements TicketFactory {
     public EvenTicketFactory() {
     }
 
