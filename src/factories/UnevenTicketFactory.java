@@ -16,6 +16,10 @@ public class UnevenTicketFactory implements TicketFactory {
         return new TicketEntry(map, TicketEntry.eventsEnum.CINEMA,false,person);
     }
 
+    public TicketEntry getConcertTicket(Map<PersonEntry, Double> map, PersonEntry person) {
+        return new TicketEntry(map, TicketEntry.eventsEnum.CONCERT,true,person);
+    }
+
     public TicketEntry getTaxiTicket(Map<PersonEntry, Double> map, PersonEntry person) {
         return new TicketEntry(map, TicketEntry.eventsEnum.TAXI,false,person);
     }
