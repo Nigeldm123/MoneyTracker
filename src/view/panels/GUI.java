@@ -185,7 +185,7 @@ public class GUI extends JPanel {
         this.payer1.addActionListener(listenerList -> {
             clearFrame();
             String eventString = event1.getText().trim();
-            System.out.println(eventString);
+            //System.out.println(eventString);
             //TicketEntry.eventsEnum selectedEvent = getEventEnum(eventString);
 
             for (String person : nameList) {
@@ -252,7 +252,7 @@ public class GUI extends JPanel {
                         }
                         // Create a new map for each TicketEntry
                         controllerT.addEntry(t);
-                        System.out.println("Entry we add to dataBase:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
+                        //System.out.println("Entry we add to dataBase:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
                         clearFrame();
                         endScreen();
                     }
@@ -276,13 +276,13 @@ public class GUI extends JPanel {
     public void addCalculateButtonListener(){
         calculate.addActionListener(listenerList -> {
             GlobalBill bill = new GlobalBill(controllerT.getDatabase());
-            System.out.println("bill: " + bill.getRegularBill());
+            //System.out.println("bill: " + bill.getRegularBill());
             BillSplitter billSplitter = new BillSplitter(bill);
             billSplitter.payBill();
             mapPayment = billSplitter.getTotalPayment();
             //eventList = billSplitter.getEventList();
-            System.out.println("event: " + eventList);
-            System.out.println("hello GUI here: " + mapPayment.values());
+            //System.out.println("event: " + eventList);
+            //System.out.println("hello GUI here: " + mapPayment.values());
             clearFrame();
             finalBill(mapPayment);
         });
@@ -301,8 +301,8 @@ public class GUI extends JPanel {
             clearFrame();
             //use iterator to iterate database and extract all tickets!
             ticketList2 = controllerT.getDatabase().getTicketList();
-            System.out.println(ticketList2);
-            System.out.println("printing full ticket list");
+            //System.out.println(ticketList2);
+            //System.out.println("printing full ticket list");
             for (TicketEntry entry : ticketList2) {
                 StringBuilder labelText = new StringBuilder();
                 labelText.append("Equal (true) or not equal (false) split: " + entry.isSplit()
@@ -319,7 +319,7 @@ public class GUI extends JPanel {
                 ticketListGUI = new JLabel(labelText.toString());
                 add(ticketListGUI);
             }
-            add(extraTicket); //listener still active?
+            add(extraTicket);
             add(calculate);
         });
     }

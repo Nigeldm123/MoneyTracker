@@ -70,6 +70,33 @@ public class BillSplitter {
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
-        return totalPayment;
+        Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
+
+        for (Map.Entry<PersonEntry, Map<PersonEntry, Double>> entry : totalPayment.entrySet()) {
+            PersonEntry payer = entry.getKey();
+            Map<PersonEntry, Double> amounts = entry.getValue();
+
+            for (Map.Entry<PersonEntry, Double> amountEntry : amounts.entrySet()) {
+                PersonEntry payee = amountEntry.getKey();
+                double currentAmount = amountEntry.getValue();
+
+                // Check if there is a reciprocal payment
+                if (totalPayment.containsKey(payee) && totalPayment.get(payee).containsKey(payer)) {
+                    double reciprocalAmount = totalPayment.get(payee).get(payer);
+
+                    // Calculate the net amount
+                    double netAmount = currentAmount - reciprocalAmount;
+
+                    // Only include positive net amounts
+                    if (netAmount > 0) {
+                        reducedPayments
+                                .computeIfAbsent(payer, k -> new HashMap<>())
+                                .put(payee, netAmount);
+                    }
+                }
+            }
+        }
+        //System.out.println("reduced payments: "+reducedPayments);
+        return reducedPayments;
     }
 }
