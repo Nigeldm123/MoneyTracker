@@ -17,46 +17,41 @@ import java.util.*;
 import java.util.List;
 
 public class GUI extends JPanel {
+    // Variables
+    private PersonController controllerP;
+    private TicketController controllerT;
+    private PersonEntry p;
+    private PersonEntry payer;
+    private Boolean split;
+    private Double price;
+    private boolean mapEmpty = true;
+    private String payerName;
+    private TicketEntry.eventsEnum event;
+
+    private Map<PersonEntry, Double> map = new HashMap<>();
+    private Map<PersonEntry, Map<PersonEntry, Double>> mapPayment = new HashMap<>();
+    private List<PersonEntry> existingPersons = new ArrayList<>();
+    private ArrayList<String> nameList = new ArrayList<>();
+    private ArrayList<TicketEntry> ticketList2;
+
     // JButtons
     private JButton addPerson;
     private JButton done;
     private JButton calculate; // calculates bill and deletes ticket
+    private JButton extraTicket;
+    private JButton giveList;
+    private JButton end;
 
     // JTextFields
     private JTextField nameP;
 
-    // JLabels
-
     // JComboBox
+    private JComboBox eventSelected;
+    private JComboBox payerSelected;
 
     // JCheckBox
-
-
-    private Double price;
-
-    private PersonEntry p;
-    private Boolean split;
-
-    // Get controllers in private fields
-    private PersonController controllerP;
-    private TicketController controllerT;
-    private ArrayList<String> nameList = new ArrayList<>();
-    private boolean mapEmpty = true;
-    private JButton payer1;
-    private String payerName;
-    private PersonEntry payer;
-    private TicketEntry.eventsEnum event = TicketEntry.eventsEnum.RESTAURANT;
-    Map<PersonEntry, Double> map = new HashMap<>(); //temp!!
-    Map<PersonEntry, Map<PersonEntry, Double>> mapPayment = new HashMap<>();
-    private JButton extraTicket;
-    private ArrayList<TicketEntry.eventsEnum> eventList;
-    private List<PersonEntry> existingPersons = new ArrayList<>();
-    private JButton giveList;
-    private ArrayList<TicketEntry> ticketList2;
-    private JButton end;
-    private JComboBox eventSelected;
     private JCheckBox splitMethod;
-    private JComboBox payerSelected;
+
 
     public GUI(PersonController controllerP, TicketController controllerT) {
         this.controllerP = controllerP;
@@ -205,6 +200,7 @@ public class GUI extends JPanel {
     }
 
     public void addEventButtonActionListener() {
+        this.event = TicketEntry.eventsEnum.RESTAURANT;     // default value
         this.eventSelected.addActionListener(listenerList -> {
             event = (TicketEntry.eventsEnum) eventSelected.getSelectedItem();
         });
