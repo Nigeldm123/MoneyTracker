@@ -42,6 +42,11 @@ public class GUI extends JPanel {
     private JButton giveList;
     private JButton end;
 
+    // JLabels
+    private JLabel errorEmpty;
+    private JLabel errorDublicate;
+    private JLabel errorGroupSize;
+
     // JTextFields
     private JTextField nameP;
 
@@ -78,9 +83,10 @@ public class GUI extends JPanel {
     }
 
     public void addPersonButtonActionListener(){
-        JLabel errorEmpty = new JLabel("Please enter name", SwingConstants.CENTER);
-        JLabel errorDublicate = new JLabel("Person already exists", SwingConstants.CENTER);
+        errorEmpty = new JLabel("Please enter name", SwingConstants.CENTER);
+        errorDublicate = new JLabel("Person already exists", SwingConstants.CENTER);
         this.addPerson.addActionListener(listenerList -> {
+            this.remove(errorGroupSize);
             if (Objects.equals(nameP.getText().trim(),"")) {
                 this.remove(errorDublicate);
                 this.add(errorEmpty);
@@ -103,11 +109,12 @@ public class GUI extends JPanel {
     }
 
     public void addGroupCompleteButtonActionListener(){
+        errorGroupSize = new JLabel("Add more than 1 person",SwingConstants.CENTER);
         this.done.addActionListener(listenerList -> {
-            if (nameList.size() >= 2) { //maybe add error but how are we removing the previous one?
+            if (nameList.size() >= 2) {
                 clearFrame();
                 setLayout(new GridLayout(0, 2, 10, 10));
-                this.done = new JButton("Ticket is done");
+                this.done = new JButton("Confirm entered amounts");
                 JLabel pricePayed = new JLabel("Money spend", SwingConstants.CENTER);
                 this.add(new JLabel());
                 this.add(pricePayed);
@@ -137,49 +144,50 @@ public class GUI extends JPanel {
                 }
                 this.add(new JLabel());
                 this.add(done);
-                done = new JButton("Next");
+                done = new JButton("Ticket is done");
                 this.add(new JLabel());
                 this.add(new JLabel());
                 this.add(new JLabel());
                 this.add(done);
 
                 addTicketCompleteButtonActionListener();
+            } else {
+                this.remove(errorEmpty);
+                this.remove(errorDublicate);
+                this.add(errorGroupSize);
             }
+
+            revalidate();
+            repaint();
         });
     }
 
     public void addTicketCompleteButtonActionListener(){
         this.done.addActionListener(listenerList -> {
-            if(!mapEmpty) {
-                clearFrame();
-                JLabel chooseEvent = new JLabel("Select event: ",SwingConstants.RIGHT);
-                eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
-                JLabel choosePayer = new JLabel("Select a payer: ",SwingConstants.RIGHT);
-                payerSelected = new JComboBox();
-                for (PersonEntry person : existingPersons) {
-                    payerSelected.addItem(person.getName());
-                }
-                splitMethod = new JCheckBox("Split evenly");
-                done = new JButton("Create ticket");
-                this.add(chooseEvent);
-                this.add(eventSelected);
-                this.add(choosePayer);
-                this.add(payerSelected);
-                this.add(new JLabel());
-                this.add(splitMethod);
-                this.add(new JLabel());
-                this.add(new JLabel());
-                this.add(new JLabel());
-                this.add(done);
-                addSplitButtonActionListener();
-                addPayerButtonActionListener();
-                addEventButtonActionListener();
-                addCreateTicketButtonActionListener();
+            clearFrame();
+            JLabel chooseEvent = new JLabel("Select event: ",SwingConstants.RIGHT);
+            eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
+            JLabel choosePayer = new JLabel("Select a payer: ",SwingConstants.RIGHT);
+            payerSelected = new JComboBox();
+            for (PersonEntry person : existingPersons) {
+                payerSelected.addItem(person.getName());
             }
-            else{
-                JLabel l = new JLabel("There is no person in group!"); // doesn't work??
-                this.add(l);
-            }
+            splitMethod = new JCheckBox("Split evenly");
+            done = new JButton("Create ticket");
+            this.add(chooseEvent);
+            this.add(eventSelected);
+            this.add(choosePayer);
+            this.add(payerSelected);
+            this.add(new JLabel());
+            this.add(splitMethod);
+            this.add(new JLabel());
+            this.add(new JLabel());
+            this.add(new JLabel());
+            this.add(done);
+            addSplitButtonActionListener();
+            addPayerButtonActionListener();
+            addEventButtonActionListener();
+            addCreateTicketButtonActionListener();
         });
     }
 
