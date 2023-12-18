@@ -104,44 +104,47 @@ public class GUI extends JPanel {
 
     public void addGroupCompleteButtonActionListener(){
         this.done.addActionListener(listenerList -> {
-            clearFrame();
-            setLayout(new GridLayout(0,2,10,10));
-            this.done = new JButton("Ticket is done");
-            JLabel pricePayed = new JLabel("Money spend",SwingConstants.CENTER);
-            this.add(new JLabel());
-            this.add(pricePayed);
-            for(PersonEntry person : existingPersons){
-                JLabel name = new JLabel(person.getName(),SwingConstants.CENTER);
-                JTextField moneySpend = new JTextField(7);
-                this.add(name);
-                this.add(moneySpend);
+            if (nameList.size() >= 2) { //maybe add error but how are we removing the previous one?
+                clearFrame();
+                setLayout(new GridLayout(0, 2, 10, 10));
+                this.done = new JButton("Ticket is done");
+                JLabel pricePayed = new JLabel("Money spend", SwingConstants.CENTER);
+                this.add(new JLabel());
+                this.add(pricePayed);
+                for (PersonEntry person : existingPersons) {
+                    JLabel name = new JLabel(person.getName(), SwingConstants.CENTER);
+                    JTextField moneySpend = new JTextField(7);
+                    this.add(name);
+                    this.add(moneySpend);
 
-                this.done.addActionListener(new ActionListener() {
-                    private TicketEntry t;
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (Objects.equals(moneySpend.getText(), "")) {
-                            price = 0.0;
-                        } else {
-                            price = Double.parseDouble(moneySpend.getText().trim());
+                    this.done.addActionListener(new ActionListener() {
+                        private TicketEntry t;
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (Objects.equals(moneySpend.getText(), "")) {
+                                price = 0.0;
+                            } else {
+                                price = Double.parseDouble(moneySpend.getText().trim());
+                            }
+                            if (price != 0) {
+                                map.put(person, price);
+                                moneySpend.setText("");
+                                mapEmpty = false;
+                            }
                         }
-                        if(price != 0) {
-                            map.put(person, price);
-                            moneySpend.setText("");
-                            mapEmpty = false;
-                        }
-                    }
-                });
+                    });
+                }
+                this.add(new JLabel());
+                this.add(done);
+                done = new JButton("Next");
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(done);
+
+                addTicketCompleteButtonActionListener();
             }
-            this.add(new JLabel());
-            this.add(done);
-            done = new JButton("Next");
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(done);
-
-            addTicketCompleteButtonActionListener();
         });
     }
 
@@ -174,7 +177,7 @@ public class GUI extends JPanel {
                 addCreateTicketButtonActionListener();
             }
             else{
-                JLabel l = new JLabel("There is no person in group!");
+                JLabel l = new JLabel("There is no person in group!"); // doesn't work??
                 this.add(l);
             }
         });
