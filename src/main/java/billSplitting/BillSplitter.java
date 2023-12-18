@@ -18,7 +18,7 @@ public class BillSplitter {
         totalPayment = new HashMap<>();
     }
 
-    public void payBill() {
+    public void calculateBill() {
 
         for (Map<PersonEntry, Map<TicketEntry.eventsEnum, Pair<Double, Set<PersonEntry>>>> equalBill : bill.getEqualBill()) {
             for (PersonEntry receiver : equalBill.keySet()) {

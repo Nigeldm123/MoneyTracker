@@ -304,7 +304,7 @@ public class GUI extends JPanel {
             //System.out.println("Regular bill: " + bill.getRegularBill());
             //System.out.println("Even bill: " + bill.getEqualBill());
             BillSplitter billSplitter = new BillSplitter(bill);
-            billSplitter.payBill();
+            billSplitter.calculateBill();
             mapPayment = billSplitter.getTotalPayment();
             //System.out.println("Total bill: " + mapPayment);
             clearFrame();

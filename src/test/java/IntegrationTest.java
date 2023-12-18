@@ -95,7 +95,7 @@ public class IntegrationTest {
 
         GlobalBill bill = new GlobalBill(ticketDatabase);
         BillSplitter splitter = new BillSplitter(bill);
-        splitter.payBill();
+        splitter.calculateBill();
 
         Map<PersonEntry, Map<PersonEntry, Double>> totalPayment = splitter.getTotalPayment();
 
