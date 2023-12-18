@@ -114,7 +114,7 @@ public class GUI extends JPanel {
             clearFrame();
             setLayout(new GridLayout(0,2,10,10));
             this.done = new JButton("Ticket is done");
-            JLabel pricePayed = new JLabel("Price payed",SwingConstants.CENTER);
+            JLabel pricePayed = new JLabel("Money spend",SwingConstants.CENTER);
             this.add(new JLabel());
             this.add(pricePayed);
             for(PersonEntry person : existingPersons){
@@ -132,9 +132,11 @@ public class GUI extends JPanel {
                         } else {
                             price = Double.parseDouble(moneySpend.getText().trim());
                         }
-                        map.put(person, price);
-                        moneySpend.setText("");
-                        mapEmpty = false;
+                        if(price != 0) {
+                            map.put(person, price);
+                            moneySpend.setText("");
+                            mapEmpty = false;
+                        }
                     }
                 });
             }
