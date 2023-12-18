@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MoneyTracerGit" target="17" />
+      <module name="MoneyTracerGit" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
