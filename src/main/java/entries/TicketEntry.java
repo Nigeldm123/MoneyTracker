@@ -1,7 +1,5 @@
 package entries;
 
-import database.PersonDatabase;
-
 import java.util.Map;
 
 public class TicketEntry {

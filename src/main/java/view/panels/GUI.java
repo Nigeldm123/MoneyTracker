@@ -6,10 +6,8 @@ import controller.PersonController;
 import controller.TicketController;
 import entries.PersonEntry;
 import entries.TicketEntry;
-import factories.EvenTicketFactory;
 import factories.FactoryProvider;
 import factories.TicketFactory;
-import factories.UnevenTicketFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -271,7 +269,7 @@ public class GUI extends JPanel {
             }
             // Create a new map for each TicketEntry
             controllerT.addEntry(t);
-            System.out.println("Entry we add to database:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
+            System.out.println("Entry we add to main.database:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
             clearFrame();
             endScreen();
 
@@ -317,7 +315,7 @@ public class GUI extends JPanel {
             setLayout(new GridLayout(0,1,10,10));
             JLabel ticketListGUI = new JLabel("Working on it");
             clearFrame();
-            //use iterator to iterate database and extract all tickets!
+            //use iterator to iterate main.database and extract all tickets!
             ticketList2 = controllerT.getDatabase().getTicketList();
             System.out.println(ticketList2);
             System.out.println("printing full ticket list");

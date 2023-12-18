@@ -1,21 +1,8 @@
-import billSplitting.BillSplitter;
-import billSplitting.GlobalBill;
-import controller.PersonController;
-import controller.TicketController;
 import database.PersonDatabase;
 import database.TicketDatabase;
-import entries.PersonEntry;
-import entries.TicketEntry;
-import factories.EvenTicketFactory;
-import factories.FactoryProvider;
-import factories.TicketFactory;
-import factories.UnevenTicketFactory;
 import observers.PersonDatabaseObserver;
 import observers.TicketDatabaseObserver;
 import view.ViewFrame;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
