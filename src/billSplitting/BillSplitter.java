@@ -70,6 +70,12 @@ public class BillSplitter {
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
+        //check if not just one ticket in database!
+        if (totalPayment.size() <= 1) {
+            System.out.println("Not enough tickets in the database for reduction.");
+            return totalPayment; // Return an empty map or handle accordingly
+        }
+
         Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
 
         for (Map.Entry<PersonEntry, Map<PersonEntry, Double>> entry : totalPayment.entrySet()) {
@@ -93,6 +99,9 @@ public class BillSplitter {
                                 .computeIfAbsent(payer, k -> new HashMap<>())
                                 .put(payee, netAmount);
                     }
+                }
+                else{
+                    return totalPayment;
                 }
             }
         }
