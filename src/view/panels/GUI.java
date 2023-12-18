@@ -19,23 +19,35 @@ import java.util.*;
 import java.util.List;
 
 public class GUI extends JPanel {
+    // JButtons
     private JButton addPerson;
     private JButton done;
-    private JTextField nameP;
-    private Double price;
     private JButton calculate; // calculates bill and deletes ticket
+
+    // JTextFields
+    private JTextField nameP;
+
+    // JLabels
+
+    // JComboBox
+
+    // JCheckBox
+
+
+    private Double price;
+
     private PersonEntry p;
-    private TicketEntry.eventsEnum eventsEnum; // {RESTAURANT, CINEMA, TAXI, CONCERT, AIRPLANE, BUS, OTHERS} values
-    private Boolean split = false;
+    private Boolean split;
 
     // Get controllers in private fields
     private PersonController controllerP;
     private TicketController controllerT;
-    private int state = 0;
     private ArrayList<String> nameList = new ArrayList<>();
     private boolean mapEmpty = true;
     private JButton payer1;
+    private String payerName;
     private PersonEntry payer;
+    private TicketEntry.eventsEnum event = TicketEntry.eventsEnum.RESTAURANT;
     Map<PersonEntry, Double> map = new HashMap<>(); //temp!!
     Map<PersonEntry, Map<PersonEntry, Double>> mapPayment = new HashMap<>();
     private JButton extraTicket;
@@ -44,7 +56,7 @@ public class GUI extends JPanel {
     private JButton giveList;
     private ArrayList<TicketEntry> ticketList2;
     private JButton end;
-    private JComboBox event;
+    private JComboBox eventSelected;
     private JCheckBox splitMethod;
     private JComboBox payerSelected;
 
@@ -73,19 +85,25 @@ public class GUI extends JPanel {
     }
 
     public void addPersonButtonActionListener(){
-        JLabel l = new JLabel("Please enter name", SwingConstants.CENTER);
+        JLabel errorEmpty = new JLabel("Please enter name", SwingConstants.CENTER);
+        JLabel errorDublicate = new JLabel("Person already exists", SwingConstants.CENTER);
         this.addPerson.addActionListener(listenerList -> {
-            if(!Objects.equals(nameP.getText().trim(), "")) {       // check for empty string
-                this.remove(l);
+            if (Objects.equals(nameP.getText().trim(),"")) {
+                this.remove(errorDublicate);
+                this.add(errorEmpty);
+            } else if (nameList.contains(nameP.getText().trim())) {
+                this.remove(errorEmpty);
+                this.add(errorDublicate);
+            } else {
+                this.remove(errorEmpty);
+                this.remove(errorDublicate);
                 p = new PersonEntry(nameP.getText().trim());
                 existingPersons.add(p);
                 controllerP.addEntry(p);
                 nameList.add(nameP.getText().trim());
                 nameP.setText("");
             }
-            else{
-                this.add(l);
-            }
+
             revalidate();
             repaint();
         });
@@ -94,8 +112,11 @@ public class GUI extends JPanel {
     public void addGroupCompleteButtonActionListener(){
         this.done.addActionListener(listenerList -> {
             clearFrame();
-            setLayout(new GridLayout(0,2,10,20));
+            setLayout(new GridLayout(0,2,10,10));
             this.done = new JButton("Ticket is done");
+            JLabel pricePayed = new JLabel("Price payed",SwingConstants.CENTER);
+            this.add(new JLabel());
+            this.add(pricePayed);
             for(PersonEntry person : existingPersons){
                 JLabel name = new JLabel(person.getName(),SwingConstants.CENTER);
                 JTextField moneySpend = new JTextField(7);
@@ -106,7 +127,7 @@ public class GUI extends JPanel {
                     private TicketEntry t;
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (price == null | Objects.equals(moneySpend.getText(), "")) {
+                        if (Objects.equals(moneySpend.getText(), "")) {
                             price = 0.0;
                         } else {
                             price = Double.parseDouble(moneySpend.getText().trim());
@@ -117,8 +138,12 @@ public class GUI extends JPanel {
                     }
                 });
             }
+            this.add(new JLabel());
             this.add(done);
             done = new JButton("Next");
+            this.add(new JLabel());
+            this.add(new JLabel());
+            this.add(new JLabel());
             this.add(done);
 
             addTicketCompleteButtonActionListener();
@@ -129,17 +154,29 @@ public class GUI extends JPanel {
         this.done.addActionListener(listenerList -> {
             if(!mapEmpty) {
                 clearFrame();
-                JLabel ev = new JLabel("Select event: ",SwingConstants.RIGHT);
-                event = new JComboBox(TicketEntry.eventsEnum.values());
+                JLabel chooseEvent = new JLabel("Select event: ",SwingConstants.RIGHT);
+                eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
+                JLabel choosePayer = new JLabel("Select a payer: ",SwingConstants.RIGHT);
+                payerSelected = new JComboBox();
+                for (PersonEntry person : existingPersons) {
+                    payerSelected.addItem(person.getName());
+                }
                 splitMethod = new JCheckBox("Split evenly");
-                payerSelected = new JComboBox((ComboBoxModel) existingPersons);
-                this.add(ev);
-                this.add(event);
-                this.add(splitMethod);
+                done = new JButton("Create ticket");
+                this.add(chooseEvent);
+                this.add(eventSelected);
+                this.add(choosePayer);
                 this.add(payerSelected);
+                this.add(new JLabel());
+                this.add(splitMethod);
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(done);
                 addSplitButtonActionListener();
-                //addPayerButtonActionListener();
+                addPayerButtonActionListener();
                 addEventButtonActionListener();
+                addCreateTicketButtonActionListener();
             }
             else{
                 JLabel l = new JLabel("There is no person in group!");
@@ -149,101 +186,40 @@ public class GUI extends JPanel {
     }
 
     public void addSplitButtonActionListener() {
+        this.split = false;     // default value
         this.splitMethod.addItemListener(listenerList -> {
             this.split = !(this.split);
-            System.out.println(this.split);
         });
     }
 
-
-    /*public void addPayerButtonActionListener() {
-        this.payer1.addActionListener(listenerList -> {
-            clearFrame();
-            String eventString = eventMethod.getText().trim();
-            System.out.println(eventString);
-            //TicketEntry.eventsEnum selectedEvent = getEventEnum(eventString);
-
-            for (String person : nameList) {
-                JButton button = new JButton(person);
-                this.add(button);
-                button.addActionListener(new ActionListener() {
-                    private TicketEntry t;
-                    private PersonEntry selectedPerson;
-
-                    public ActionListener init(PersonEntry personEntry) {
-                        this.selectedPerson = personEntry;
-                        return this;
-                    }
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        payer = selectedPerson;
-                        Map<PersonEntry, Double> currentMap = new HashMap<>(map);
-                        if(split) {
-                            TicketFactory evenFact = FactoryProvider.EvenTicket();
-                            switch (eventString) {
-                                case "cinema":
-                                    this.t = evenFact.getCinemaTicket(currentMap, payer);
-                                    break;
-                                case "restaurant":
-                                    this.t = evenFact.getRestaurantTicket(currentMap, payer);
-                                    break;
-                                case "taxi":
-                                    this.t = evenFact.getTaxiTicket(currentMap, payer);
-                                    break;
-                                case "airplane":
-                                    this.t = evenFact.getAirplaneTicket(currentMap, payer);
-                                    break;
-                                case "bus":
-                                    this.t = evenFact.getBusTicket(currentMap, payer);
-                                    break;
-                                default:
-                                    this.t = evenFact.getTicket(currentMap, payer);
-                                    break;
-                            }
-                        }
-                        else {
-                            TicketFactory unevenFact = FactoryProvider.UnevenTicket();
-                            switch (eventString) {
-                                case "cinema":
-                                    this.t = unevenFact.getCinemaTicket(currentMap, payer);
-                                    break;
-                                case "restaurant":
-                                    this.t = unevenFact.getRestaurantTicket(currentMap, payer);
-                                    break;
-                                case "taxi":
-                                    this.t = unevenFact.getTaxiTicket(currentMap, payer);
-                                    break;
-                                case "airplane":
-                                    this.t = unevenFact.getAirplaneTicket(currentMap, payer);
-                                    break;
-                                case "bus":
-                                    this.t = unevenFact.getBusTicket(currentMap, payer);
-                                    break;
-                                default:
-                                    this.t = unevenFact.getTicket(currentMap, payer);
-                                    break;
-                            }
-                        }
-                        // Create a new map for each TicketEntry
-                        controllerT.addEntry(t);
-                        System.out.println("Entry we add to dataBase:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
-                        clearFrame();
-                        endScreen();
-                    }
-                }.init(controllerP.getEntryByName(person)));
+    public void addPayerButtonActionListener() {
+        this.payer = existingPersons.get(0);        // default value
+        this.payerSelected.addActionListener(listenerList -> {
+            this.payerName = (String) payerSelected.getSelectedItem();
+            for (PersonEntry person : existingPersons) {
+                if (Objects.equals(payerName, person.getName())) {
+                    this.payer = person;
+                }
             }
         });
-    }*/
+    }
 
     public void addEventButtonActionListener() {
-        this.event.addActionListener(listenerList -> {
+        this.eventSelected.addActionListener(listenerList -> {
+            event = (TicketEntry.eventsEnum) eventSelected.getSelectedItem();
+        });
+    }
+
+    public void addCreateTicketButtonActionListener() {
+        this.done.addActionListener(listenerList -> {
+            clearFrame();
+            String eventString = event.toString();
+            System.out.println(eventString);
             Map<PersonEntry, Double> currentMap = new HashMap<>(map);
-            String selectedItem = event.getSelectedItem().toString();
             TicketEntry t;
             if (split) {
                 TicketFactory evenFact = FactoryProvider.EvenTicket();
-                switch (selectedItem) {
+                switch (eventString) {
                     case "CINEMA":
                         t = evenFact.getCinemaTicket(currentMap, payer);
                         break;
@@ -269,7 +245,7 @@ public class GUI extends JPanel {
             }
             else {
                 TicketFactory unevenFact = FactoryProvider.UnevenTicket();
-                switch (selectedItem) {
+                switch (eventString) {
                     case "CINEMA":
                         t = unevenFact.getCinemaTicket(currentMap, payer);
                         break;
@@ -298,12 +274,14 @@ public class GUI extends JPanel {
             System.out.println("Entry we add to database:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
             clearFrame();
             endScreen();
+
         });
     }
 
     public void endScreen(){
-        calculate = new JButton("calculate bill");
-        extraTicket = new JButton("add another ticket");
+        setLayout(new GridLayout(3,1,5,30));
+        calculate = new JButton("Calculate bill");
+        extraTicket = new JButton("Add another ticket");
         giveList = new JButton("Print list of tickets");
         this.add(calculate);
         this.add(extraTicket);
@@ -316,13 +294,12 @@ public class GUI extends JPanel {
     public void addCalculateButtonListener(){
         calculate.addActionListener(listenerList -> {
             GlobalBill bill = new GlobalBill(controllerT.getDatabase());
-            System.out.println("bill: " + bill.getRegularBill());
+            //System.out.println("Regular bill: " + bill.getRegularBill());
+            //System.out.println("Even bill: " + bill.getEqualBill());
             BillSplitter billSplitter = new BillSplitter(bill);
             billSplitter.payBill();
             mapPayment = billSplitter.getTotalPayment();
-            //eventList = billSplitter.getEventList();
-            System.out.println("event: " + eventList);
-            System.out.println("hello GUI here: " + mapPayment.values());
+            //System.out.println("Total bill: " + mapPayment);
             clearFrame();
             finalBill(mapPayment);
         });
@@ -337,6 +314,7 @@ public class GUI extends JPanel {
 
     public void addGiveListButtonListener() {
         giveList.addActionListener(listenerList -> {
+            setLayout(new GridLayout(0,1,10,10));
             JLabel ticketListGUI = new JLabel("Working on it");
             clearFrame();
             //use iterator to iterate database and extract all tickets!
@@ -345,15 +323,14 @@ public class GUI extends JPanel {
             System.out.println("printing full ticket list");
             for (TicketEntry entry : ticketList2) {
                 StringBuilder labelText = new StringBuilder();
-                labelText.append("Equal (true) or not equal (false) split: " + entry.isSplit()
-                        + " Payer: " + entry.getPayer().getName()
-                        + " Event: " + entry.getEvent()
-                        + " Price per person: ");
+                labelText.append("Evenly split: " + entry.isSplit()
+                        + "       Payer: " + entry.getPayer().getName()
+                        + "       Event: " + entry.getEvent()
+                        + "       Price per person: ");
                 for (PersonEntry person : entry.getMap().keySet()) {
                     double price = entry.getMap().get(person);
-                    //System.out.println(person.getName() + " - EUR " + price);
                     if(person.getName() != "") {
-                        labelText.append(" " + person.getName() + " - EUR " + price);
+                        labelText.append(" " + person.getName() + " - EUR " + price + "   ");
                     }
                 }
                 ticketListGUI = new JLabel(labelText.toString());
@@ -365,11 +342,11 @@ public class GUI extends JPanel {
     }
 
     private void resetTicketVariables() {
-        // Reset ticket-related variables and components
         map.clear();
-        payer = null;
-        eventsEnum = TicketEntry.eventsEnum.CINEMA; // Reset the event
-        split = true; // Reset the split value
+        // default values
+        payer = existingPersons.get(0);
+        split = false;
+        event = TicketEntry.eventsEnum.RESTAURANT;
 
         extraTicket.setEnabled(true); // Enable the extraTicket button
 
@@ -386,6 +363,7 @@ public class GUI extends JPanel {
 
 
     public void finalBill(Map<PersonEntry, Map<PersonEntry, Double>> mapPayment) {
+        setLayout(new GridLayout(0,1,10,10));
         Set<String> includedPersons = new HashSet<>();
 
         end = new JButton("Terminate application");
@@ -416,7 +394,6 @@ public class GUI extends JPanel {
             this.add(paymentLabel);
         }
         add(giveList);
-        //clearValues(); //Not needed?
         add(end);
         addEndButtonListener();
     }

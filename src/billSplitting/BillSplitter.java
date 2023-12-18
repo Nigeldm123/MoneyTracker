@@ -37,7 +37,14 @@ public class BillSplitter {
                         }
                     }
                 }
-                totalPayment.put(receiver,paymentPerPerson);
+                if (totalPayment.containsKey(receiver)) {
+                    Map<PersonEntry,Double> oldPaymentPerPerson = totalPayment.get(receiver);
+                    oldPaymentPerPerson.forEach(
+                            (key, value) -> paymentPerPerson.merge(key, value, Double::sum));       // merge two existing maps (old + new)
+                    totalPayment.replace(receiver,paymentPerPerson);
+                } else {
+                    totalPayment.put(receiver,paymentPerPerson);
+                }
             }
         }
 
@@ -70,7 +77,7 @@ public class BillSplitter {
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
-        Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
+        /*Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
 
         for (Map.Entry<PersonEntry, Map<PersonEntry, Double>> entry : totalPayment.entrySet()) {
             PersonEntry payer = entry.getKey();
@@ -97,6 +104,7 @@ public class BillSplitter {
             }
         }
         //System.out.println("reduced payments: "+reducedPayments);
-        return reducedPayments;
+        return reducedPayments;*/
+        return totalPayment;
     }
 }

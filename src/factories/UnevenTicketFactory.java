@@ -25,7 +25,7 @@ public class UnevenTicketFactory implements TicketFactory {
     }
 
     public TicketEntry getAirplaneTicket(Map<PersonEntry, Double> map, PersonEntry person) {
-        return new TicketEntry(map, TicketEntry.eventsEnum.OTHERS,false,person);
+        return new TicketEntry(map, TicketEntry.eventsEnum.AIRPLANE,false,person);
     }
 
     public TicketEntry getBusTicket(Map<PersonEntry, Double> map, PersonEntry person) {
