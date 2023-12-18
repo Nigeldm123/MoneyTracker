@@ -37,14 +37,7 @@ public class BillSplitter {
                         }
                     }
                 }
-                if (totalPayment.containsKey(receiver)) {
-                    Map<PersonEntry,Double> oldPaymentPerPerson = totalPayment.get(receiver);
-                    oldPaymentPerPerson.forEach(
-                            (key, value) -> paymentPerPerson.merge(key, value, Double::sum));       // merge two existing maps (old + new)
-                    totalPayment.replace(receiver,paymentPerPerson);
-                } else {
-                    totalPayment.put(receiver,paymentPerPerson);
-                }
+                totalPayment.put(receiver,paymentPerPerson);
             }
         }
 
@@ -77,7 +70,13 @@ public class BillSplitter {
     }
 
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
-        /*Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
+        //check if not just one ticket in database!
+        if (totalPayment.size() <= 1) {
+            //System.out.println("Not enough tickets in the database for reduction.");
+            return totalPayment; // Return an empty map or handle accordingly
+        }
+
+        Map<PersonEntry, Map<PersonEntry, Double>> reducedPayments = new HashMap<>();
 
         for (Map.Entry<PersonEntry, Map<PersonEntry, Double>> entry : totalPayment.entrySet()) {
             PersonEntry payer = entry.getKey();
@@ -101,10 +100,14 @@ public class BillSplitter {
                                 .put(payee, netAmount);
                     }
                 }
+                else{
+                    reducedPayments
+                            .computeIfAbsent(payer, k -> new HashMap<>())
+                            .put(payee, currentAmount);;
+                }
             }
         }
         //System.out.println("reduced payments: "+reducedPayments);
-        return reducedPayments;*/
-        return totalPayment;
+        return reducedPayments;
     }
 }

@@ -57,6 +57,7 @@ public class IntegrationTest {
         ticketMap2.put(person2, 40.0);
 
         Map<PersonEntry, Double> ticketMap3 = new HashMap<>();
+        ticketMap3.put(person1, 90.0);
         ticketMap3.put(person5, 0.0);
         ticketMap3.put(person2, 10.0);
         ticketMap3.put(person4, 25.0);
@@ -102,19 +103,17 @@ public class IntegrationTest {
         Set<PersonEntry> payers = totalPayment.keySet();
         Set<PersonEntry> realPayers = new HashSet<>();
         realPayers.add(person1); realPayers.add(person5);
-        System.out.println(payers);
-        Assert.assertTrue(payers.equals(realPayers));
+        Assert.assertEquals(payers, realPayers);
 
         // Test if prices are correct
-        System.out.println(totalPayment);
         Map<PersonEntry, Double> paymenPerson1 = totalPayment.get(person1);
         Assert.assertEquals("p2 -> p1",70.0, (double) paymenPerson1.get(person2),0.0);
         Assert.assertEquals("p3 -> p1",40.0, (double) paymenPerson1.get(person3), 0.0);
         Assert.assertNull("p4 -> p1", paymenPerson1.get(person4));
-        Assert.assertEquals("p5 -> p1",40.0, (double) paymenPerson1.get(person5), 0.0);
+        Assert.assertNull("p5 -> p1",paymenPerson1.get(person5));
 
         Map<PersonEntry, Double> paymenPerson5 = totalPayment.get(person5);
-        Assert.assertNull("p1 -> p5",paymenPerson5.get(person1));
+        Assert.assertEquals("p1 -> p5",50.0, (double) paymenPerson5.get(person1), 0.0);
         Assert.assertEquals("p2 -> p5",10.0, (double) paymenPerson5.get(person2), 0.0);
         Assert.assertNull("p3 -> p5", paymenPerson5.get(person3));
         Assert.assertEquals("p4 -> p5",25.0, (double) paymenPerson5.get(person4), 0.0);
