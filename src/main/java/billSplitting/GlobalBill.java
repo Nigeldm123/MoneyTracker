@@ -30,31 +30,6 @@ public class GlobalBill {
         }
     }
 
-    /*public void addEqualBill(TicketEntry ticket) {
-        ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
-        Map<PersonEntry, Double> ticketMap = ticket.getMap();
-        PersonEntry payer = ticket.getPayer();
-
-        for (PersonEntry personEntry : personList) {
-            if (Objects.equals(personEntry.getName(), payer.getName())) {
-                payerEqualMap = new HashMap<>();
-                for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
-                    if (elem == ticket.getEvent()) {
-                        eventEqualMap = new HashMap<>();
-                        double full_price = 0;
-                        for (double price : ticketMap.values()) {
-                            full_price += price;
-                        }
-                        Pair<Double,Set<PersonEntry>> ticketPrice = new Pair<>(full_price,ticketMap.keySet());
-                        eventEqualMap.put(ticket.getEvent(), ticketPrice);
-                        payerEqualMap.put(payer, eventEqualMap);
-                        equalBill.add(payerEqualMap);
-                    }
-                }
-            }
-        }
-    }*/
-
     public void addEqualBill(TicketEntry ticket) {
         PersonDatabase personList = PersonDatabase.getInstance();
         Map<PersonEntry, Double> ticketMap = ticket.getMap();
@@ -80,26 +55,6 @@ public class GlobalBill {
             }
         }
     }
-
-    /*public void addRegularBill(TicketEntry ticket) {
-        ArrayList<PersonEntry> personList = PersonDatabase.getInstance().getGroup();
-        Map<PersonEntry, Double> ticketMap = ticket.getMap();
-        PersonEntry payer = ticket.getPayer();
-
-        for (PersonEntry personEntry : personList) {
-            if (Objects.equals(personEntry.getName(), payer.getName())) {
-                payerMap = new HashMap<>();
-                for (TicketEntry.eventsEnum elem : TicketEntry.eventsEnum.values()) {
-                    if (elem == ticket.getEvent()) {
-                        eventMap = new HashMap<>();
-                        eventMap.put(ticket.getEvent(), ticketMap);
-                        payerMap.put(payer, eventMap);
-                        regularBill.add(payerMap);
-                    }
-                }
-            }
-        }
-    }*/
 
     public void addRegularBill(TicketEntry ticket) {
         PersonDatabase personList = PersonDatabase.getInstance();

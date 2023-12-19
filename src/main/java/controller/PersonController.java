@@ -19,12 +19,4 @@ public class PersonController implements ControllerInterface<PersonEntry> {
         db.removeEntry(P);
     }
 
-    public PersonEntry getEntryByName(String name) {
-        for (PersonEntry personEntry : db.getGroup()) {
-            if (personEntry.getName().equals(name)) {
-                return personEntry;
-            }
-        }
-        return null; // Return null if no matching entry is found
-    }
 }
