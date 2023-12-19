@@ -37,8 +37,14 @@ public class BillSplitter {
                         }
                     }
                 }
-                totalPayment.put(receiver,paymentPerPerson);
-            }
+                if (totalPayment.containsKey(receiver)) {
+                    Map<PersonEntry,Double> oldPaymentPerPerson = totalPayment.get(receiver);
+                    oldPaymentPerPerson.forEach(
+                            (key, value) -> paymentPerPerson.merge(key, value, Double::sum));       // merge two existing maps (old + new)
+                    totalPayment.replace(receiver,paymentPerPerson);
+                } else {
+                    totalPayment.put(receiver,paymentPerPerson);
+                }            }
         }
 
         for (Map<PersonEntry, Map<TicketEntry.eventsEnum, Map<PersonEntry, Double>>> unequalBill : bill.getRegularBill()) {
@@ -80,11 +86,11 @@ public class BillSplitter {
 
         for (Map.Entry<PersonEntry, Map<PersonEntry, Double>> entry : totalPayment.entrySet()) {
             PersonEntry payer = entry.getKey();
-            Map<PersonEntry, Double> amounts = entry.getValue();
+            Map<PersonEntry, Double> moneySpendPerPerson = entry.getValue();
 
-            for (Map.Entry<PersonEntry, Double> amountEntry : amounts.entrySet()) {
-                PersonEntry payee = amountEntry.getKey();
-                double currentAmount = amountEntry.getValue();
+            for (Map.Entry<PersonEntry, Double> moneySpendPerPersonEntry : moneySpendPerPerson.entrySet()) {
+                PersonEntry payee = moneySpendPerPersonEntry.getKey();
+                double currentAmount = moneySpendPerPersonEntry.getValue();
 
                 // Check if there is a reciprocal payment
                 if (totalPayment.containsKey(payee) && totalPayment.get(payee).containsKey(payer)) {
