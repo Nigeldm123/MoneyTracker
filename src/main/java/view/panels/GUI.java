@@ -164,30 +164,32 @@ public class GUI extends JPanel {
 
     public void addTicketCompleteButtonActionListener(){
         this.done.addActionListener(listenerList -> {
-            clearFrame();
-            JLabel chooseEvent = new JLabel("Select event: ",SwingConstants.RIGHT);
-            eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
-            JLabel choosePayer = new JLabel("Select a payer: ",SwingConstants.RIGHT);
-            payerSelected = new JComboBox();
-            for (PersonEntry person : existingPersons) {
-                payerSelected.addItem(person.getName());
+            if(!mapEmpty) { //prevents entering empty ticket
+                clearFrame();
+                JLabel chooseEvent = new JLabel("Select event: ", SwingConstants.RIGHT);
+                eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
+                JLabel choosePayer = new JLabel("Select a payer: ", SwingConstants.RIGHT);
+                payerSelected = new JComboBox();
+                for (PersonEntry person : existingPersons) {
+                    payerSelected.addItem(person.getName());
+                }
+                splitMethod = new JCheckBox("Split evenly");
+                done = new JButton("Create ticket");
+                this.add(chooseEvent);
+                this.add(eventSelected);
+                this.add(choosePayer);
+                this.add(payerSelected);
+                this.add(new JLabel());
+                this.add(splitMethod);
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(done);
+                addSplitButtonActionListener();
+                addPayerButtonActionListener();
+                addEventButtonActionListener();
+                addCreateTicketButtonActionListener();
             }
-            splitMethod = new JCheckBox("Split evenly");
-            done = new JButton("Create ticket");
-            this.add(chooseEvent);
-            this.add(eventSelected);
-            this.add(choosePayer);
-            this.add(payerSelected);
-            this.add(new JLabel());
-            this.add(splitMethod);
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(done);
-            addSplitButtonActionListener();
-            addPayerButtonActionListener();
-            addEventButtonActionListener();
-            addCreateTicketButtonActionListener();
         });
     }
 
