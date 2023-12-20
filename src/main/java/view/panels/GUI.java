@@ -109,7 +109,7 @@ public class GUI extends JPanel {
     }
 
     public void addGroupCompleteButtonActionListener(){
-        errorGroupSize = new JLabel("Add more than 1 person",SwingConstants.CENTER);
+        errorGroupSize = new JLabel("Add at least 2 people",SwingConstants.CENTER);
         this.done.addActionListener(listenerList -> {
             if (nameList.size() >= 2) {
                 clearFrame();
@@ -164,30 +164,32 @@ public class GUI extends JPanel {
 
     public void addTicketCompleteButtonActionListener(){
         this.done.addActionListener(listenerList -> {
-            clearFrame();
-            JLabel chooseEvent = new JLabel("Select event: ",SwingConstants.RIGHT);
-            eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
-            JLabel choosePayer = new JLabel("Select a payer: ",SwingConstants.RIGHT);
-            payerSelected = new JComboBox();
-            for (PersonEntry person : existingPersons) {
-                payerSelected.addItem(person.getName());
+            if(!mapEmpty) {
+                clearFrame();
+                JLabel chooseEvent = new JLabel("Select event: ", SwingConstants.RIGHT);
+                eventSelected = new JComboBox(TicketEntry.eventsEnum.values());
+                JLabel choosePayer = new JLabel("Select a payer: ", SwingConstants.RIGHT);
+                payerSelected = new JComboBox();
+                for (PersonEntry person : existingPersons) {
+                    payerSelected.addItem(person.getName());
+                }
+                splitMethod = new JCheckBox("Split evenly");
+                done = new JButton("Create ticket");
+                this.add(chooseEvent);
+                this.add(eventSelected);
+                this.add(choosePayer);
+                this.add(payerSelected);
+                this.add(new JLabel());
+                this.add(splitMethod);
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(new JLabel());
+                this.add(done);
+                addSplitButtonActionListener();
+                addPayerButtonActionListener();
+                addEventButtonActionListener();
+                addCreateTicketButtonActionListener();
             }
-            splitMethod = new JCheckBox("Split evenly");
-            done = new JButton("Create ticket");
-            this.add(chooseEvent);
-            this.add(eventSelected);
-            this.add(choosePayer);
-            this.add(payerSelected);
-            this.add(new JLabel());
-            this.add(splitMethod);
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(new JLabel());
-            this.add(done);
-            addSplitButtonActionListener();
-            addPayerButtonActionListener();
-            addEventButtonActionListener();
-            addCreateTicketButtonActionListener();
         });
     }
 
@@ -353,6 +355,7 @@ public class GUI extends JPanel {
         // default values
         payer = existingPersons.get(0);
         split = false;
+        mapEmpty = true;
         event = TicketEntry.eventsEnum.RESTAURANT;
 
         extraTicket.setEnabled(true); // Enable the extraTicket button

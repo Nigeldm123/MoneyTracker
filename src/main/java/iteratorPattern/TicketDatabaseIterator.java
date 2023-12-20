@@ -3,8 +3,8 @@ package iteratorPattern;
 import database.TicketDatabase;
 
 public class TicketDatabaseIterator implements DatabaseIterator {
-    int index;
-    TicketDatabase t = TicketDatabase.getInstance();
+    private int index;
+    private TicketDatabase t = TicketDatabase.getInstance();
     @Override
     public boolean hasNext() {
         if (index < t.size()) {
