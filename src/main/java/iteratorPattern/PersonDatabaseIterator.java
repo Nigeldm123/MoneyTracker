@@ -3,8 +3,8 @@ package iteratorPattern;
 import database.PersonDatabase;
 
 public class PersonDatabaseIterator implements DatabaseIterator {
-    int index;
-    PersonDatabase p = PersonDatabase.getInstance();
+    private int index;
+    private PersonDatabase p = PersonDatabase.getInstance();
     @Override
     public boolean hasNext() {
         if (index < p.size()) {
