@@ -1,8 +1,8 @@
 package iteratorPattern;
 
 public interface DatabaseIterator {
-   public boolean hasNext();
+   boolean hasNext();
 
-   public Object next();
+   Object next();
 
 }
