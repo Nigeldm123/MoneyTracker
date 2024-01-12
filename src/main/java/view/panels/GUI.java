@@ -222,7 +222,6 @@ public class GUI extends JPanel {
         this.done.addActionListener(listenerList -> {
             clearFrame();
             String eventString = event.toString();
-            System.out.println(eventString);
             Map<PersonEntry, Double> currentMap = new HashMap<>(map);
             TicketEntry t;
             if (split) {
@@ -279,7 +278,6 @@ public class GUI extends JPanel {
             }
             // Create a new map for each TicketEntry
             controllerT.addEntry(t);
-            System.out.println("Entry we add to main.database:" + t.getMap() + " " + t.getPayer() + " " + t.isSplit());
             clearFrame();
             endScreen();
 
@@ -302,12 +300,9 @@ public class GUI extends JPanel {
     public void addCalculateButtonListener(){
         calculate.addActionListener(listenerList -> {
             GlobalBill bill = new GlobalBill(controllerT.getDatabase());
-            //System.out.println("Regular bill: " + bill.getRegularBill());
-            //System.out.println("Even bill: " + bill.getEqualBill());
             BillSplitter billSplitter = new BillSplitter(bill);
             billSplitter.calculateBill();
             mapPayment = billSplitter.getTotalPayment();
-            //System.out.println("Total bill: " + mapPayment);
             clearFrame();
             finalBill(mapPayment);
         });
@@ -327,8 +322,6 @@ public class GUI extends JPanel {
             clearFrame();
             //use iterator to iterate main.database and extract all tickets!
             ticketList2 = controllerT.getDatabase().getTicketList();
-            System.out.println(ticketList2);
-            System.out.println("printing full ticket list");
             for (TicketEntry entry : ticketList2) {
                 StringBuilder labelText = new StringBuilder();
                 labelText.append("Evenly split: " + entry.isSplit()

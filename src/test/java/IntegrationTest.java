@@ -1,12 +1,12 @@
 import billSplitting.BillSplitter;
 import billSplitting.GlobalBill;
+import database.Database;
 import entries.PersonEntry;
 import entries.TicketEntry;
 import database.PersonDatabase;
 import database.TicketDatabase;
 import factories.FactoryProvider;
 import factories.TicketFactory;
-import iteratorPattern.Container;
 import iteratorPattern.DatabaseIterator;
 import org.junit.Assert;
 import org.junit.Before;
@@ -76,7 +76,7 @@ public class IntegrationTest {
     }
 
 
-    private boolean hasEntryInDatabase(Container database, Object entry) {
+    private boolean hasEntryInDatabase(Database database, Object entry) {
         DatabaseIterator iterator = database.getIterator();
         while (iterator.hasNext()) {
             if (iterator.next().equals(entry)) {

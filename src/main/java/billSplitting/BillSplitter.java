@@ -78,7 +78,6 @@ public class BillSplitter {
     public Map<PersonEntry, Map<PersonEntry, Double>> getTotalPayment() {
         //check if not just one ticket in database!
         if (totalPayment.size() <= 1) {
-            //System.out.println("Not enough tickets in the database for reduction.");
             return totalPayment; // Return an empty map or handle accordingly
         }
 
@@ -113,7 +112,6 @@ public class BillSplitter {
                 }
             }
         }
-        //System.out.println("reduced payments: "+reducedPayments);
         return reducedPayments;
     }
 }
