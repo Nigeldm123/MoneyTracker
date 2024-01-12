@@ -27,7 +27,6 @@ public class GUI extends JPanel {
     private boolean mapEmpty = true;
     private String payerName;
     private TicketEntry.eventsEnum event;
-
     private Map<PersonEntry, Double> map = new HashMap<>();
     private Map<PersonEntry, Map<PersonEntry, Double>> mapPayment = new HashMap<>();
     private List<PersonEntry> existingPersons = new ArrayList<>();
@@ -44,7 +43,7 @@ public class GUI extends JPanel {
 
     // JLabels
     private JLabel errorEmpty;
-    private JLabel errorDublicate;
+    private JLabel errorDuplicate;
     private JLabel errorGroupSize;
 
     // JTextFields
@@ -84,18 +83,18 @@ public class GUI extends JPanel {
 
     public void addPersonButtonActionListener(){
         errorEmpty = new JLabel("Please enter name", SwingConstants.CENTER);
-        errorDublicate = new JLabel("Person already exists", SwingConstants.CENTER);
+        errorDuplicate = new JLabel("Person already exists", SwingConstants.CENTER);
         this.addPerson.addActionListener(listenerList -> {
             this.remove(errorGroupSize);
             if (Objects.equals(nameP.getText().trim(),"")) {
-                this.remove(errorDublicate);
+                this.remove(errorDuplicate);
                 this.add(errorEmpty);
             } else if (nameList.contains(nameP.getText().trim())) {
                 this.remove(errorEmpty);
-                this.add(errorDublicate);
+                this.add(errorDuplicate);
             } else {
                 this.remove(errorEmpty);
-                this.remove(errorDublicate);
+                this.remove(errorDuplicate);
                 p = new PersonEntry(nameP.getText().trim());
                 existingPersons.add(p);
                 controllerP.addEntry(p);
@@ -153,7 +152,7 @@ public class GUI extends JPanel {
                 addTicketCompleteButtonActionListener();
             } else {
                 this.remove(errorEmpty);
-                this.remove(errorDublicate);
+                this.remove(errorDuplicate);
                 this.add(errorGroupSize);
             }
 
